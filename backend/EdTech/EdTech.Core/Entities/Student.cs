@@ -28,8 +28,8 @@ namespace EdTech.Core.Entities
         public Guid Id { get; private set; }
         public string Name{ get; set; }
         public string Email { get; set; }
-        public string SchoolId { get; set; }
-        public INationalIdentifier NationalIdentifier { get; set; }
+        public string SchoolId { get; }
+        public INationalIdentifier NationalIdentifier { get; }
 
        
     }
