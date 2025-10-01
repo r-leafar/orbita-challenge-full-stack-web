@@ -1,4 +1,5 @@
-﻿using EdTech.Core.Interfaces;
+﻿using EdTech.Core.Enums;
+using EdTech.Core.Interfaces;
 using EdTech.Core.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,11 @@ namespace EdTech.Core.Factories
 {
     public static class NationalIdentifierFactory
     {
-        public static INationalIdentifier Create(string type, string value)
+        public static INationalIdentifier Create(NationalIdentifierType type, string value)
         {
-            return type.ToLower() switch
+            return type switch
             {
-                "cpf" => new CpfIdentifier(value),
+                NationalIdentifierType.CPF => new CpfIdentifier(value),
                 _ => throw new NotSupportedException($"O identificador '{type}' não é suportado.")
             };
         }
