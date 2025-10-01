@@ -102,3 +102,14 @@ dist
 
 # TernJS port file
 .tern-port
+/backend/EdTech/.vs/EdTech
+/backend/EdTech/EdTech.Application/obj
+/backend/EdTech/EdTech.Core/obj
+/backend/EdTech/EdTech.Infrastructure/obj
+/backend/EdTech/EdTech.UnitTest/obj
+/backend/EdTech/EdTech.WebApi/obj
+/backend/EdTech/EdTech.Application/bin/Debug/net9.0
+/backend/EdTech/EdTech.Core/bin/Debug/net9.0
+/backend/EdTech/EdTech.Infrastructure/bin/Debug/net9.0
+/backend/EdTech/EdTech.UnitTest/bin/Debug/net9.0
+/backend/EdTech/EdTech.WebApi/bin/Debug/net9.0
