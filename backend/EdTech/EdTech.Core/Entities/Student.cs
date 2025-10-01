@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EdTech.Core.Entities
 {
-    public class Student
+    public class Student : BaseEntity<Guid>
     {
         public Student(string name, string email, string schoolId, INationalIdentifier nationalIdentifier)
         {
@@ -18,14 +18,12 @@ namespace EdTech.Core.Entities
             Ensure.NotNullOrWhiteSpace(email, nameof(email));
             Ensure.NotNullOrWhiteSpace(schoolId, nameof(schoolId));
 
-            Id = Guid.CreateVersion7();
+            SetId(Guid.CreateVersion7());
             Name = name;
             Email = email;
             SchoolId = schoolId;
             NationalIdentifier = nationalIdentifier;
         }
-
-        public Guid Id { get; private set; }
         public string Name{ get; set; }
         public string Email { get; set; }
         public string SchoolId { get; }
