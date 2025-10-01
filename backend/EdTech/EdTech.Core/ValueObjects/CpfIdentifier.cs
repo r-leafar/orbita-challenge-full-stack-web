@@ -16,6 +16,11 @@ namespace EdTech.Core.ValueObjects
         public CpfIdentifier(string number)
         {
             Number = number;
+
+            if (!IsValid())
+            {
+                throw new ArgumentException("CPF inválido.", nameof(number));
+            }
         }
 
         public bool IsValid()
