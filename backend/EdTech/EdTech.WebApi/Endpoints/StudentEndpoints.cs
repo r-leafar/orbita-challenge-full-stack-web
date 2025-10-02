@@ -16,7 +16,7 @@ namespace EdTech.WebApi.Endpoints
 
                 return Results.Created($"/students/{idStudent}", student);
             }).
-            WithName("CreateProduct").
+            WithName("CreateStudents").
            Produces<CreateStudentRequest>(StatusCodes.Status201Created).
            Produces(StatusCodes.Status400BadRequest);
 
