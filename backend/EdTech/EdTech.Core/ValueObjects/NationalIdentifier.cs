@@ -15,6 +15,11 @@ namespace EdTech.Core.ValueObjects
         {
             Number = number;
             Type = type;
+
+            if (!IsValid())
+            {
+                throw new ArgumentException($"O número '{number}' não é um identificador válido do tipo '{type}'.");
+            }
         }
         protected abstract bool IsValid();
 
