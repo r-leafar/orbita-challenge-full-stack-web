@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace EdTech.Core.Enums
 {
     public enum NationalIdentifierType
-    {
+    { 
+        NONE,
         CPF
     }
 }
