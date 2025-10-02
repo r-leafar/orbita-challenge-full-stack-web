@@ -35,11 +35,11 @@ namespace EdTech.Infrastructure
 
         private static string GetConnectionString(IConfiguration config)
         {
-            var host = config["DB_HOST"] ?? "localhost";
-            var port = config["DB_PORT"] ?? "5432";
-            var database = config["DB_DATABASE"] ?? "edtechdb";
-            var username = config["DB_USERNAME"] ?? "postgres";
-            var password = config["DB_PASSWORD"] ?? "postgres";
+            var host = config["POSTGRES_SERVER"] ?? "localhost";
+            var port = config["POSTGRES_PORT"] ?? "5432";
+            var database = config["POSTGRES_DB"] ?? "edtechdb";
+            var username = config["POSTGRES_USER"] ?? "postgres";
+            var password = config["POSTGRES_PASSWORD"] ?? "postgres";
             return $"Host={host};Port={port};Database={database};Username={username};Password={password};";
         }
     }
