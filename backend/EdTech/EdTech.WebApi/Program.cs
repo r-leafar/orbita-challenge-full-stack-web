@@ -1,6 +1,7 @@
 using EdTech.Infrastructure;
 using EdTech.Infrastructure.Context;
 using EdTech.WebApi.Endpoints;
+using EdTech.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,8 @@ builder.Services.AddInfrastructureDI(builder.Configuration);
 // Add services to the container.
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
