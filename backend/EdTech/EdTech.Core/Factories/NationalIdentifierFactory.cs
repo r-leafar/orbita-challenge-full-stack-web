@@ -11,7 +11,7 @@ namespace EdTech.Core.Factories
 {
     public static class NationalIdentifierFactory
     {
-        public static INationalIdentifier Create(NationalIdentifierType type, string value)
+        public static NationalIdentifier Create(NationalIdentifierType type, string value)
         {
             return type switch
             {
