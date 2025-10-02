@@ -25,8 +25,26 @@ namespace EdTech.Core.Entities
             SchoolId = schoolId;
             NationalIdentifier = nationalIdentifier;
         }
-        public string Name{ get; set; }
-        public string Email { get; set; }
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                Ensure.NotNullOrWhiteSpace(value, nameof(Name));
+                _name = value;
+            }
+        }
+        private string _name;
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                Ensure.NotNullOrWhiteSpace(value, nameof(_email));
+                _email = value;
+            }
+        }
+        private string _email;
         public string SchoolId { get; }
         public NationalIdentifier NationalIdentifier { get; }
 
