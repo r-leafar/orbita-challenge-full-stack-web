@@ -12,6 +12,7 @@ namespace EdTech.Core.Entities
 {
     public class Student : BaseEntity<Guid>
     {
+        private Student() { }
         public Student(string name, string email, string schoolId, NationalIdentifier nationalIdentifier)
         {
             Ensure.NotNullOrWhiteSpace(name, nameof(name));
