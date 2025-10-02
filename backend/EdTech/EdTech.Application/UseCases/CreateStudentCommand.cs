@@ -3,11 +3,6 @@ using EdTech.Core.Entities;
 using EdTech.Core.Enums;
 using EdTech.Core.Factories;
 using EdTech.Core.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.Application.UseCases
 {
@@ -29,7 +24,7 @@ namespace EdTech.Application.UseCases
 
             if (enumNationalIdentifier == NationalIdentifierType.NONE)
             {
-                throw new ArgumentException("O tipo do indentificador informado é inválido.");
+                throw new ArgumentException("O tipo do indentificador informado é inválido.", nameof(dto.NationalIdType));
             }
 
             var student = new Student(
