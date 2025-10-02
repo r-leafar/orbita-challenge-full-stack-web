@@ -11,5 +11,7 @@ namespace EdTech.Application.Exceptions
         public ApplicationException(string message) : base(message) { }
 
         public ApplicationException(string message,string paramName) : this(message + $" (Parâmetro: {paramName})") { }
+        public ApplicationException(string message, Exception innerException)
+      : base(message, innerException) { }
     }
 }

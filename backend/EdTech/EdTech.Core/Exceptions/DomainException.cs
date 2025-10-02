@@ -13,5 +13,7 @@ namespace EdTech.Core.Exceptions
         public DomainException(string message, string paramName) : this(message + $" (Parâmetro: {paramName})")
         {
         }
+        public DomainException(string message, Exception innerException)
+        : base(message, innerException) { }
     }
 }
