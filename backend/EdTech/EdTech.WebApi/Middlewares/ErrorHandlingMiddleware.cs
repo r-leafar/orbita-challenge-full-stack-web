@@ -1,4 +1,6 @@
-﻿namespace EdTech.WebApi.Middlewares
+﻿using EdTech.Core.Exceptions;
+
+namespace EdTech.WebApi.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
@@ -17,12 +19,21 @@
             {
                 await _next(context);
             }
-            catch (ArgumentException ex)
+            catch (DomainException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync(new
                 {
-                    error = "Erro de Validação",
+                    error = "Erro no Dominio",
+                    message = ex.Message
+                });
+            }
+            catch (EdTech.Application.Exceptions.ApplicationException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                await context.Response.WriteAsJsonAsync(new
+                {
+                    error = "Erro na Aplicação",
                     message = ex.Message
                 });
             }
