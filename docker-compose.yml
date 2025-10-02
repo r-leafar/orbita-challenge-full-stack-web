@@ -33,6 +33,7 @@ services:
     # Mapeia um volume para persistir os dados do banco de dados 
     # (dados não serão perdidos ao parar o container)
     volumes:
+      - ./initdb:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
     
     # Reinicia o container se ele falhar
