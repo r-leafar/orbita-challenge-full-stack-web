@@ -1,6 +1,24 @@
 services:
+  webapi:
+    build:
+      context: ./backend/EdTech     # raiz onde está o Dockerfile
+      dockerfile: Dockerfile
+    container_name: edtech_webapi
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    depends_on:
+      - postgres
+    environment:
+      # Conexão com o banco (aqui o host é o nome do serviço "postgres")
+      POSTGRES_SERVER: server-db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    restart: always
 
   postgres:
+    container_name: server-db
     image: postgres:17.6 
     
     ports:
@@ -23,3 +41,4 @@ services:
 # Definição do volume para persistência de dados
 volumes:
   postgres_data:
+  
