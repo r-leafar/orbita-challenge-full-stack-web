@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace EdTech.Core.ValueObjects
 {
-    public class CpfIdentifier : INationalIdentifier
+    public class CpfIdentifier : NationalIdentifier
     {
-        public string Number { get; }
-        public NationalIdentifierType Type => NationalIdentifierType.CPF;
-
-        public CpfIdentifier(string number)
+        public CpfIdentifier(string number) : base(number, NationalIdentifierType.CPF)
         {
-            Number = number;
 
-            if (!IsValid())
-            {
-                throw new ArgumentException("CPF inválido.", nameof(number));
-            }
         }
-
-        public bool IsValid()
+       
+        protected override bool IsValid()
         {
             return Number?.Length == 11;
         }
