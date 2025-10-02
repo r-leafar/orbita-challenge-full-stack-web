@@ -9,5 +9,9 @@ namespace EdTech.Core.Exceptions
     public class DomainException : Exception
     {
         public DomainException(string message) : base(message) { }
+
+        public DomainException(string message, string paramName) : this(message + $" (Parâmetro: {paramName})")
+        {
+        }
     }
 }
