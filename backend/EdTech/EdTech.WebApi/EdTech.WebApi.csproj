@@ -7,4 +7,10 @@
     <UserSecretsId>676d672b-cdd7-4802-afa5-765b6a6d652b</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EdTech.Application\EdTech.Application.csproj" />
+    <ProjectReference Include="..\EdTech.Core\EdTech.Core.csproj" />
+    <ProjectReference Include="..\EdTech.Infrastructure\EdTech.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
