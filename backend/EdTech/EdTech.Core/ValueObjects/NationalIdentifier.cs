@@ -1,4 +1,5 @@
 ﻿using EdTech.Core.Enums;
+using EdTech.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace EdTech.Core.ValueObjects
 {
-    public abstract class NationalIdentifier
+    public class NationalIdentifier : INationalIdentifier
     {
         public string Number { get; init; }
         public NationalIdentifierType Type { get; init; }
@@ -21,7 +22,10 @@ namespace EdTech.Core.ValueObjects
                 throw new ArgumentException($"O número '{number}' não é um identificador válido do tipo '{type}'.");
             }
         }
-        protected abstract bool IsValid();
 
+        public virtual bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

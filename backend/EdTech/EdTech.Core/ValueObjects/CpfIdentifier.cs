@@ -15,7 +15,7 @@ namespace EdTech.Core.ValueObjects
 
         }
        
-        protected override bool IsValid()
+         public override bool IsValid()
         {
             return Number?.Length == 11;
         }
