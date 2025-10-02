@@ -1,0 +1,25 @@
+services:
+
+  postgres:
+    image: postgres:17.6 
+    
+    ports:
+      - "${POSTGRES_PORT}:5432"
+      
+    environment:
+      # Variáveis de ambiente padrão do PostgreSQL
+      POSTGRES_USER:  ${POSTGRES_USER}      # POSTGRES_USER
+      POSTGRES_PASSWORD:  ${POSTGRES_PASSWORD} # POSTGRES_PASSWORD
+      POSTGRES_DB:  ${POSTGRES_DB}    # POSTGRES_DB
+      
+    # Mapeia um volume para persistir os dados do banco de dados 
+    # (dados não serão perdidos ao parar o container)
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    
+    # Reinicia o container se ele falhar
+    restart: always
+
+# Definição do volume para persistência de dados
+volumes:
+  postgres_data:
