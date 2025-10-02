@@ -1,4 +1,5 @@
 ﻿using EdTech.Core.Enums;
+using EdTech.Core.Exceptions;
 using EdTech.Core.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace EdTech.Core.ValueObjects
 
             if (!IsValid())
             {
-                throw new ArgumentException($"O número '{number}' não é um identificador válido do tipo '{type}'.");
+                throw new DomainException($"O número '{number}' não é um identificador válido do tipo '{type}'.");
             }
         }
 
         public virtual bool IsValid()
         {
-            throw new NotImplementedException();
+            throw new DomainException("Método não implementado.");
         }
     }
 }

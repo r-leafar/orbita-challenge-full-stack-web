@@ -1,4 +1,5 @@
 ﻿using EdTech.Core.Enums;
+using EdTech.Core.Exceptions;
 using EdTech.Core.Interfaces;
 using EdTech.Core.ValueObjects;
 using System;
@@ -16,7 +17,7 @@ namespace EdTech.Core.Factories
             return type switch
             {
                 NationalIdentifierType.CPF => new CpfIdentifier(value),
-                _ => throw new NotSupportedException($"O identificador '{type}' não é suportado.")
+                _ => throw new DomainException($"O identificador '{type}' não é suportado.")
             };
         }
     }
