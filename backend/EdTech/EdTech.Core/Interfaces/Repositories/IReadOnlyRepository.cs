@@ -12,6 +12,6 @@ namespace EdTech.Core.Interfaces.Repositories
     {
         public Task<T> GetByIdAsync(TId id);
         public  Task<T> GetByIdAsync(TId id, params Expression<Func<T, object>>[] includes);
-        public Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null!, bool sortAscending = true);
+        public Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null!, bool sortAscending = true, params Expression<Func<T, object>>[] includes);
     }
 }

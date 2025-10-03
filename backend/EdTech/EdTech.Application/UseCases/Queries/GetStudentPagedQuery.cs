@@ -13,22 +13,22 @@ using System.Threading.Tasks;
 
 namespace EdTech.Application.UseCases.Query
 {
-    public class GetStudentByIdQuery : IQueryById<StudentResponse, Guid>
+    public class GetStudentPagedQuery
     {
         private readonly IStudentRepository _repository;
 
-        public GetStudentByIdQuery(IStudentRepository repository)
+        public GetStudentPagedQuery(IStudentRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<StudentResponse> Handle(Guid id)
+        public async Task<PagedResponse<StudentResponse>> Handle(int page,int pageSize)
         {
-            var student = await _repository.GetByIdOrThrowAsync(id, "Student", x => x.NationalIdentifier);
+            var students = await _repository.GetPaged(page,pageSize, x=> x.Name,true, x => x.NationalIdentifier);
 
             try
             {
-               return student.ToResponse();
+               return new PagedResponse<StudentResponse>(students.ToResponse(),page, pageSize,0,students.Count());
             }
             catch (DomainException ex)
             {

@@ -35,9 +35,9 @@ namespace EdTech.Infrastructure.Repositories
             return await repositoryRead.GetByIdAsync(id,includes);
         }
 
-        public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null, bool sortAscending = true)
+        public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null, bool sortAscending = true, params Expression<Func<T, object>>[] includes)
         {
-            return await repositoryRead.GetPaged(pageNumber, pageSize, orderBy, sortAscending);
+            return await repositoryRead.GetPaged(pageNumber, pageSize, orderBy, sortAscending,includes);
         }
 
         public async Task UpdateAsync(T entity)

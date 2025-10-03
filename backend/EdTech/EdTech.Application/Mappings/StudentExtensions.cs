@@ -21,5 +21,19 @@ namespace EdTech.Application.Mappings
                 student.NationalIdentifier.Number
             );
         }
+        public static IEnumerable<StudentResponse> ToResponse(this IEnumerable<Student> students)
+        {
+            if (students == null)
+            {
+                return null;
+            }
+
+            return students.Select(student => new StudentResponse(
+                student.Id,
+                student.Name,
+                student.Email,
+                student.SchoolId,
+                student.NationalIdentifier?.Number));
+        }
     }
 }

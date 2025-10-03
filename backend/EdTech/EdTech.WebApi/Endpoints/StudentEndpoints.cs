@@ -46,7 +46,7 @@ namespace EdTech.WebApi.Endpoints
            Produces<NoContent>(StatusCodes.Status204NoContent).
            Produces(StatusCodes.Status400BadRequest);
 
-            group.MapGet("/{id:guid}", async (Guid id, IStudentRepository repository) =>
+         group.MapGet("/{id:guid}", async (Guid id, IStudentRepository repository) =>
             {
                 var query = new GetStudentByIdQuery(repository);
                 return await query.Handle(id);
@@ -55,6 +55,16 @@ namespace EdTech.WebApi.Endpoints
          WithName("QueryStudentById").
          Produces<StudentResponse>(StatusCodes.Status200OK).
          Produces(StatusCodes.Status400BadRequest);
+
+        group.MapGet("/{page:int}/{pageSize:int}", async (int page,int pageSize,IStudentRepository repository) =>
+        {
+            var query = new GetStudentPagedQuery(repository);
+            return await query.Handle(page,pageSize);
+
+        }).
+        WithName("QueryStudentsPaged").
+        Produces<PagedResponse<StudentResponse>>(StatusCodes.Status200OK).
+        Produces(StatusCodes.Status400BadRequest);
 
             return group;
         }

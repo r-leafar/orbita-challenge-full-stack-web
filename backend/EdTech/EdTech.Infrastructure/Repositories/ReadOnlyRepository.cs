@@ -36,9 +36,14 @@ namespace EdTech.Infrastructure.Repositories
             return entity!;
         }
 
-        public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null!, bool sortAscending = true)
+        public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null!, bool sortAscending = true, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = dbContext.Set<T>();
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
 
             if (orderBy != null)
             {
