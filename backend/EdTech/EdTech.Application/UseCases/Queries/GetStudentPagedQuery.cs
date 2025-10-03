@@ -2,6 +2,7 @@
 using EdTech.Application.Dtos.Responses;
 using EdTech.Application.Exceptions;
 using EdTech.Application.Mappings;
+using EdTech.Application.Validation;
 using EdTech.Core.Entities;
 using EdTech.Core.Exceptions;
 using EdTech.Core.Interfaces.Repositories;
@@ -24,10 +25,12 @@ namespace EdTech.Application.UseCases.Query
 
         public async Task<PagedResponse<StudentResponse>> Handle(int page,int pageSize)
         {
-            var students = await _repository.GetPaged(page,pageSize, x=> x.Name,true, x => x.NationalIdentifier);
+            PaginationValidator.Validate(page, pageSize);
 
             try
             {
+              var students = await _repository.GetPaged(page,pageSize, x=> x.Name,true, x => x.NationalIdentifier);
+
                return new PagedResponse<StudentResponse>(students.ToResponse(),page, pageSize,0,students.Count());
             }
             catch (DomainException ex)
