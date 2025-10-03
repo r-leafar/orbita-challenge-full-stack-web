@@ -19,7 +19,7 @@ namespace EdTech.WebApi.Endpoints
                     return Results.Created($"/students/{idStudent}", student.ToResponse(idStudent));                
             }).
             WithName("CreateStudent").
-           Produces<CreateStudentResponse>(StatusCodes.Status201Created).
+           Produces<CreateStudentResponse>(StatusCodes.Status204NoContent).
            Produces(StatusCodes.Status400BadRequest);
 
             group.MapPut("/", async (UpdateStudentRequest student, IStudentRepository repository) =>
@@ -30,7 +30,18 @@ namespace EdTech.WebApi.Endpoints
                 return Results.NoContent();
             }).
            WithName("UpdateStudent").
-           Produces<NoContent>(StatusCodes.Status201Created).
+           Produces<NoContent>(StatusCodes.Status204NoContent).
+           Produces(StatusCodes.Status400BadRequest);
+
+            group.MapDelete("/{id:guid}", async (Guid id, IStudentRepository repository) =>
+            {
+                var command = new DeleteStudentCommand(repository);
+                await command.Handle(id);
+
+                return Results.NoContent();
+            }).
+           WithName("DeleteStudent").
+           Produces<NoContent>(StatusCodes.Status204NoContent).
            Produces(StatusCodes.Status400BadRequest);
 
             return group;
