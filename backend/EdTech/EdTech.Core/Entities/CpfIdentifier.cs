@@ -11,7 +11,7 @@ namespace EdTech.Core.Entities
     public class CpfIdentifier : NationalIdentifier
     {
         private CpfIdentifier() { }
-        internal CpfIdentifier(string value) : base(value) { }
+        public CpfIdentifier(string value) : base(value) { }
          public override bool IsValid()
         {
             return Number?.Length == 11;
