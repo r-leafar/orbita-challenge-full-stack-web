@@ -1,7 +1,6 @@
 ﻿using EdTech.Core.Entities;
-using EdTech.Core.Enums;
 using EdTech.Core.Exceptions;
-using EdTech.Core.Factories;
+using EdTech.UnitTest.Helpers;
 
 namespace EdTech.UnitTest.Core
 {
@@ -20,7 +19,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("", "Saboia@lg.com", "123", createCpf());
+                var student = new Student("", "Saboia@lg.com", "123", NationalIdentifierTestHelper.CreateValidCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: name)", exception.Message);
@@ -30,7 +29,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "", "123", createCpf());
+                var student = new Student("Rafael", "", "123", NationalIdentifierTestHelper.CreateValidCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: email)", exception.Message);
@@ -41,7 +40,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "shja@lg.com", "", createCpf());
+                var student = new Student("Rafael", "shja@lg.com", "", NationalIdentifierTestHelper.CreateValidCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: schoolId)", exception.Message);
@@ -86,14 +85,8 @@ namespace EdTech.UnitTest.Core
 
         private Student createStudent() 
         {
-            var student = new Student("Rafael", "Saboia@gmail.com", "123", createCpf());
+            var student = new Student("Rafael", "Saboia@gmail.com", "123", NationalIdentifierTestHelper.CreateValidCpf());
             return student;
         }
-
-        private NationalIdentifier createCpf()
-        {
-            return NationalIdentifierFactory.Create(NationalIdentifierType.CPF, "12345678900");
-        }
-
     }
 }
