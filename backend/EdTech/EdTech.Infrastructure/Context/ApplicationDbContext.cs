@@ -1,11 +1,6 @@
 ﻿using EdTech.Core.Entities;
 using EdTech.Infrastructure.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.Infrastructure.Context
 {
@@ -17,6 +12,7 @@ namespace EdTech.Infrastructure.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new StudentConfiguration());
+            modelBuilder.ApplyConfiguration(new NationalIdentifierConfiguration());
         }
 
         public DbSet<Student> Students { get; set; }

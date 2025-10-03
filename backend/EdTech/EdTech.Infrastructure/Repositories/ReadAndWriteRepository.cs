@@ -1,12 +1,7 @@
 ﻿using EdTech.Core.Entities;
 using EdTech.Core.Interfaces.Repositories;
 using EdTech.Infrastructure.Context;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.Infrastructure.Repositories
 {

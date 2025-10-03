@@ -6,15 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EdTech.Core.ValueObjects
+namespace EdTech.Core.Entities
 {
     public class CpfIdentifier : NationalIdentifier
     {
-        public CpfIdentifier(string number) : base(number, NationalIdentifierType.CPF)
-        {
-
-        }
-       
+        private CpfIdentifier() { }
+        internal CpfIdentifier(string value) : base(value) { }
          public override bool IsValid()
         {
             return Number?.Length == 11;

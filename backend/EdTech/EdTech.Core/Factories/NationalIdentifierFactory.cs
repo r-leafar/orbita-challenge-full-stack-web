@@ -1,12 +1,6 @@
-﻿using EdTech.Core.Enums;
+﻿using EdTech.Core.Entities;
+using EdTech.Core.Enums;
 using EdTech.Core.Exceptions;
-using EdTech.Core.Interfaces;
-using EdTech.Core.ValueObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.Core.Factories
 {
