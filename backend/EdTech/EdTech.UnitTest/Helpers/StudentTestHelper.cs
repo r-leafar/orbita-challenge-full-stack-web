@@ -9,7 +9,7 @@ namespace EdTech.UnitTest.Helpers
 {
     public static class StudentTestHelper
     {
-        public static Student CreateValidStudent()
+        public static Student CreateValidStudent_V1()
         {
            return new Student("Rafael", "slboia@gmail.com", "123", NationalIdentifierTestHelper.CreateValidCpf());
         }

@@ -9,7 +9,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithSucess_ShouldBeNotNull()
         {
-            var student = StudentTestHelper.CreateValidStudent();
+            var student = StudentTestHelper.CreateValidStudent_V1();
 
             Assert.NotNull(student);
         }
@@ -60,7 +60,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void ChangeStudentName_ForEmpty_ShouldThrowException()
         {
-            var student = StudentTestHelper.CreateValidStudent();
+            var student = StudentTestHelper.CreateValidStudent_V1();
 
             var exception = Assert.Throws<DomainException>(() =>
             {
@@ -73,7 +73,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void ChangeStudentEmail_ForEmpty_ShouldThrowException()
         {
-            var student = StudentTestHelper.CreateValidStudent();
+            var student = StudentTestHelper.CreateValidStudent_V1();
 
             var exception = Assert.Throws<DomainException>(() =>
             {

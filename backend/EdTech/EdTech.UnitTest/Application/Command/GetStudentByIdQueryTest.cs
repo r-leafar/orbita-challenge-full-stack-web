@@ -21,7 +21,7 @@ namespace EdTech.UnitTest.Application.Command
         public async Task GetStudentByIdQuery_WithSucess()
         {
             var id = Guid.CreateVersion7();
-            var student = StudentTestHelper.CreateValidStudent();
+            var student = StudentTestHelper.CreateValidStudent_V1();
 
             _repositoryMock.Setup(r => r.GetByIdAsync(id, x=> x.NationalIdentifier)).ReturnsAsync(student);
             
