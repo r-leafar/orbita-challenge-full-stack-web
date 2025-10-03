@@ -3,6 +3,7 @@ using EdTech.Core.Entities;
 using EdTech.Core.Interfaces.Repositories;
 using EdTech.UnitTest.Helpers;
 using Moq;
+using System.Linq.Expressions;
 
 namespace EdTech.UnitTest.Application.Command
 {
@@ -27,6 +28,9 @@ namespace EdTech.UnitTest.Application.Command
             
             var result = await _query.Handle(id);
 
+            _repositoryMock.Verify(r =>
+               r.GetByIdAsync(id, It.IsAny<Expression<Func<Student, object>>[]>()), Times.Once);
+
             Assert.Equal(student.Name, result.Name);
             Assert.Equal(student.Email, result.Email);
             Assert.Equal(student.SchoolId, result.SchoolId);
@@ -44,6 +48,9 @@ namespace EdTech.UnitTest.Application.Command
                 await _query.Handle(id);
             });
 
+           _repositoryMock.Verify(r =>
+                r.GetByIdAsync(id, It.IsAny<Expression<Func<Student, object>>[]>()),Times.Once);
+
             Assert.Equal("Erro ao consultar o estudante.", exception.Message);
             Assert.Equal("Student com Id 0199abd8-229a-71e7-9d7c-5ddda3f116dd não encontrado.", exception?.InnerException?.Message);
         }
@@ -52,10 +59,14 @@ namespace EdTech.UnitTest.Application.Command
         {
             var id = Guid.Parse("0199abd8-229a-71e7-9d7c-5ddda3f116dd");
             _repositoryMock.Setup(r => r.GetByIdAsync(id, x => x.NationalIdentifier)).ThrowsAsync(new Exception("Database error"));
+
             var exception = await Assert.ThrowsAsync<Exception>(async () =>
             {
                 await _query.Handle(id);
             });
+
+            _repositoryMock.Verify(r =>
+               r.GetByIdAsync(id, It.IsAny<Expression<Func<Student, object>>[]>()), Times.Once);
 
             Assert.Equal("Exception of type 'System.Exception' was thrown.",exception.Message);
         }
