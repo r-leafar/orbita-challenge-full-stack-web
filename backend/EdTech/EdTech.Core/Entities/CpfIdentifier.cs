@@ -12,7 +12,7 @@ namespace EdTech.Core.Entities
     public class CpfIdentifier : NationalIdentifier
     {
         private CpfIdentifier() { }
-        internal CpfIdentifier(string value) : base(value) 
+        internal CpfIdentifier(string value) : base(value, NationalIdentifierType.CPF) 
         {
             if (!IsValid())
                 throw new DomainException("O valor informado para o CPF não é válido", Number);  

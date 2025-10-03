@@ -8,10 +8,13 @@ namespace EdTech.Core.Factories
     {
         public static NationalIdentifier Create(NationalIdentifierType type, string value)
         {
+            string defaultMessage = $"O identificador '{type}' não é suportado.";
+
             return type switch
             {
                 NationalIdentifierType.CPF => new CpfIdentifier(value),
-                _ => throw new DomainException($"O identificador '{type}' não é suportado.")
+                NationalIdentifierType.NONE => throw new DomainException(defaultMessage),
+                _ => throw new DomainException(defaultMessage)
             };
         }
     }

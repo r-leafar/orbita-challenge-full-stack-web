@@ -17,9 +17,10 @@ namespace EdTech.Core.Entities
         public NationalIdentifierType Type { get; init; }
         protected NationalIdentifier() { }
 
-        protected NationalIdentifier(string value) 
+        protected NationalIdentifier(string value, NationalIdentifierType type) 
         {
             Number = value;
+            Type = type;
         }
         public abstract bool IsValid();
     }
