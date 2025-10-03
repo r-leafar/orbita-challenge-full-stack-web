@@ -21,19 +21,15 @@ namespace EdTech.UnitTest.Application.Command
         public async Task GetStudentByIdQuery_WithSucess()
         {
             var id = Guid.CreateVersion7();
-            var name = "Rafael";
-            var email = "shja@hh.com";
-            var schoolId = "123";
-
-            var student = new Student(name, email, schoolId, NationalIdentifierTestHelper.CreateValidCpf());
+            var student = StudentTestHelper.CreateValidStudent();
 
             _repositoryMock.Setup(r => r.GetByIdAsync(id, x=> x.NationalIdentifier)).ReturnsAsync(student);
             
             var result = await _query.Handle(id);
 
-            Assert.Equal("Rafael", result.Name);
-            Assert.Equal(email, result.Email);
-            Assert.Equal(schoolId, result.SchoolId);
+            Assert.Equal(student.Name, result.Name);
+            Assert.Equal(student.Email, result.Email);
+            Assert.Equal(student.SchoolId, result.SchoolId);
         }
 
         [Fact]
