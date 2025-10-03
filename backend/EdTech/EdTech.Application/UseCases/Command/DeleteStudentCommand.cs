@@ -23,7 +23,7 @@ namespace EdTech.Application.UseCases.Command
             {
                 await _repository.DeleteAsync(student);
 
-            }catch(DomainException ex)
+            }catch(Exceptions.ApplicationException ex)
             {
                 throw new Exceptions.ApplicationException("Erro ao apagar o estudante.", ex);
             }

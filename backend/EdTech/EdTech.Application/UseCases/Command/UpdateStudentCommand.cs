@@ -30,7 +30,7 @@ namespace EdTech.Application.UseCases.Command
 
                 await _repository.UpdateAsync(student);
 
-            }catch(DomainException ex)
+            }catch(Exceptions.ApplicationException ex)
             {
                 throw new Exceptions.ApplicationException("Erro ao atualizar estudante.", ex);
             }
