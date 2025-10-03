@@ -30,6 +30,11 @@ namespace EdTech.Infrastructure.Repositories
             return await repositoryRead.GetByIdAsync(id);
         }
 
+        public async Task<T> GetByIdAsync(TId id, params Expression<Func<T, object>>[] includes)
+        {
+            return await repositoryRead.GetByIdAsync(id,includes);
+        }
+
         public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null, bool sortAscending = true)
         {
             return await repositoryRead.GetPaged(pageNumber, pageSize, orderBy, sortAscending);

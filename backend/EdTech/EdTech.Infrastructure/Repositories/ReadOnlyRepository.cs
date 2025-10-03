@@ -25,6 +25,16 @@ namespace EdTech.Infrastructure.Repositories
             var entity = await dbSet.FindAsync(id);
             return entity!;
         }
+        public async Task<T> GetByIdAsync(TId id, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = dbSet;
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            var entity = await query.FirstOrDefaultAsync(e => e.Id!.Equals(id));
+            return entity!;
+        }
 
         public async Task<IEnumerable<T>> GetPaged(int pageNumber, int pageSize, Expression<Func<T, object>> orderBy = null!, bool sortAscending = true)
         {
