@@ -9,7 +9,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithSucess_ShouldBeNotNull()
         {
-            var student = createStudent();
+            var student = StudentTestHelper.CreateValidStudent();
 
             Assert.NotNull(student);
         }
@@ -19,7 +19,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("", "Saboia@lg.com", "123", NationalIdentifierTestHelper.CreateValidCpf());
+                var student = StudentTestHelper.CreateInvalidStudent_NoName();
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: name)", exception.Message);
@@ -29,7 +29,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "", "123", NationalIdentifierTestHelper.CreateValidCpf());
+                var student = StudentTestHelper.CreateInvalidStudent_NoEmail();
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: email)", exception.Message);
@@ -40,7 +40,7 @@ namespace EdTech.UnitTest.Core
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "shja@lg.com", "", NationalIdentifierTestHelper.CreateValidCpf());
+                var student = StudentTestHelper.CreateInvalidStudent_NoSchoolId();
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: schoolId)", exception.Message);
@@ -60,7 +60,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void ChangeStudentName_ForEmpty_ShouldThrowException()
         {
-            var student = createStudent();
+            var student = StudentTestHelper.CreateValidStudent();
 
             var exception = Assert.Throws<DomainException>(() =>
             {
@@ -73,7 +73,7 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void ChangeStudentEmail_ForEmpty_ShouldThrowException()
         {
-            var student = createStudent();
+            var student = StudentTestHelper.CreateValidStudent();
 
             var exception = Assert.Throws<DomainException>(() =>
             {
@@ -81,12 +81,6 @@ namespace EdTech.UnitTest.Core
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: Email)", exception.Message);
-        }
-
-        private Student createStudent() 
-        {
-            var student = new Student("Rafael", "Saboia@gmail.com", "123", NationalIdentifierTestHelper.CreateValidCpf());
-            return student;
         }
     }
 }
