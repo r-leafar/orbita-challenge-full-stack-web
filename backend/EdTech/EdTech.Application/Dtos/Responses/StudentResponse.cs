@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EdTech.Application.Dtos
+namespace EdTech.Application.Dtos.Responses
 {
-    public record CreateStudentResponse(
+    public record StudentResponse(
         Guid Id,
         string Name,
         string Email,
