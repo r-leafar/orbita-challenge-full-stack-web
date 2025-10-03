@@ -29,7 +29,7 @@ namespace EdTech.Application.UseCases.Query
                var student = await _repository.GetByIdOrThrowAsync(id, "Student", x => x.NationalIdentifier);
                return student.ToResponse();
             }
-            catch (DomainException ex)
+            catch (Exceptions.ApplicationException ex)
             {
                 throw new Exceptions.ApplicationException("Erro ao consultar o estudante.", ex);
             }

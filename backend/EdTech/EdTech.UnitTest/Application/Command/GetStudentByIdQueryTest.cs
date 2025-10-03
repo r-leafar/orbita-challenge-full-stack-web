@@ -1,15 +1,8 @@
-﻿using EdTech.Application.UseCases.Command;
-using EdTech.Application.UseCases.Query;
+﻿using EdTech.Application.UseCases.Query;
 using EdTech.Core.Entities;
-using EdTech.Core.Enums;
-using EdTech.Core.Factories;
 using EdTech.Core.Interfaces.Repositories;
+using EdTech.UnitTest.Helpers;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.UnitTest.Application.Command
 {
@@ -32,7 +25,7 @@ namespace EdTech.UnitTest.Application.Command
             var email = "shja@hh.com";
             var schoolId = "123";
 
-            var student = new Student(name, email, schoolId, createCpf());
+            var student = new Student(name, email, schoolId, NationalIdentifierTestHelper.CreateValidCpf());
 
             _repositoryMock.Setup(r => r.GetByIdAsync(id, x=> x.NationalIdentifier)).ReturnsAsync(student);
             
@@ -42,9 +35,21 @@ namespace EdTech.UnitTest.Application.Command
             Assert.Equal(email, result.Email);
             Assert.Equal(schoolId, result.SchoolId);
         }
-        private NationalIdentifier createCpf()
+
+        [Fact]
+        public async Task GetStudentByIdQuery_StudentNotFound_ShouldThrowException()
         {
-            return NationalIdentifierFactory.Create(NationalIdentifierType.CPF, "12345678900");
+            var id = Guid.Parse("0199abd8-229a-71e7-9d7c-5ddda3f116dd");
+
+            _repositoryMock.Setup(r => r.GetByIdAsync(id, x => x.NationalIdentifier)).ReturnsAsync((Student)null!);
+
+            var exception = await Assert.ThrowsAsync<EdTech.Application.Exceptions.ApplicationException> ( async() =>
+            {
+                await _query.Handle(id);
+            });
+
+            Assert.Equal("Erro ao consultar o estudante.", exception.Message);
+            Assert.Equal("Student com Id 0199abd8-229a-71e7-9d7c-5ddda3f116dd não encontrado.", exception?.InnerException?.Message);
         }
     }
 }
