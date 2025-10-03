@@ -24,10 +24,9 @@ namespace EdTech.Application.UseCases.Query
 
         public async Task<StudentResponse> Handle(Guid id)
         {
-            var student = await _repository.GetByIdOrThrowAsync(id, "Student", x => x.NationalIdentifier);
-
             try
             {
+               var student = await _repository.GetByIdOrThrowAsync(id, "Student", x => x.NationalIdentifier);
                return student.ToResponse();
             }
             catch (DomainException ex)
