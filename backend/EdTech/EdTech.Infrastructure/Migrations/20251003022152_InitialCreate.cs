@@ -17,7 +17,8 @@ namespace EdTech.Infrastructure.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
-                    email = table.Column<string>(type: "text", nullable: false)
+                    email = table.Column<string>(type: "text", nullable: false),
+                    school_id = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,7 +30,7 @@ namespace EdTech.Infrastructure.Migrations
                 columns: table => new
                 {
                     student_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    number = table.Column<string>(type: "text", nullable: false),
+                    number = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     identifier_type = table.Column<string>(type: "character varying(21)", maxLength: 21, nullable: false)
                 },
                 constraints: table =>
