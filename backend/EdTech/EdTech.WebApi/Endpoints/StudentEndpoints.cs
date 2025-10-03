@@ -1,8 +1,10 @@
-﻿using EdTech.Application.Dtos;
-using EdTech.Application.UseCases;
-using EdTech.Application.Mappings;
+﻿using EdTech.Application.Mappings;
 using EdTech.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Http.HttpResults;
+using EdTech.Application.Dtos.Requests;
+using EdTech.Application.Dtos.Responses;
+using EdTech.Application.UseCases.Command;
+using EdTech.Application.UseCases.Query;
 
 namespace EdTech.WebApi.Endpoints
 {
@@ -19,7 +21,7 @@ namespace EdTech.WebApi.Endpoints
                     return Results.Created($"/students/{idStudent}", student.ToResponse(idStudent));                
             }).
             WithName("CreateStudent").
-           Produces<CreateStudentResponse>(StatusCodes.Status204NoContent).
+           Produces<StudentResponse>(StatusCodes.Status204NoContent).
            Produces(StatusCodes.Status400BadRequest);
 
             group.MapPut("/", async (UpdateStudentRequest student, IStudentRepository repository) =>
@@ -43,6 +45,16 @@ namespace EdTech.WebApi.Endpoints
            WithName("DeleteStudent").
            Produces<NoContent>(StatusCodes.Status204NoContent).
            Produces(StatusCodes.Status400BadRequest);
+
+            group.MapGet("/{id:guid}", async (Guid id, IStudentRepository repository) =>
+            {
+                var query = new GetStudentByIdQuery(repository);
+                return await query.Handle(id);
+
+            }).
+         WithName("QueryStudentById").
+         Produces<StudentResponse>(StatusCodes.Status200OK).
+         Produces(StatusCodes.Status400BadRequest);
 
             return group;
         }
