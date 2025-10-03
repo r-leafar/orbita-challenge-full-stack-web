@@ -1,4 +1,5 @@
 ﻿using EdTech.Application.Dtos;
+using EdTech.Application.Exceptions;
 using EdTech.Core.Entities;
 using EdTech.Core.Enums;
 using EdTech.Core.Exceptions;
@@ -20,12 +21,8 @@ namespace EdTech.Application.UseCases
         public async Task Handle(UpdateStudentRequest dto)
         {
 
-            var student = await _repository.GetByIdAsync(dto.Id);
+            var student = await _repository.GetByIdOrThrowAsync(dto.Id);
 
-            if (student == null)
-            {
-                throw new EdTech.Application.Exceptions.ApplicationException($"Estudante com Id {dto.Id} não encontrado.");
-            }
             try
             {
                 student.Email = dto.Email;

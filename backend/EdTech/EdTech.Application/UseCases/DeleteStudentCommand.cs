@@ -1,8 +1,5 @@
-﻿using EdTech.Application.Dtos;
-using EdTech.Core.Entities;
-using EdTech.Core.Enums;
+﻿using EdTech.Application.Exceptions;
 using EdTech.Core.Exceptions;
-using EdTech.Core.Factories;
 using EdTech.Core.Interfaces.Repositories;
 
 namespace EdTech.Application.UseCases
@@ -20,12 +17,8 @@ namespace EdTech.Application.UseCases
         public async Task Handle(Guid id)
         {
 
-            var student = await _repository.GetByIdAsync(id);
+            var student = await _repository.GetByIdOrThrowAsync(id);
 
-            if (student == null)
-            {
-                throw new EdTech.Application.Exceptions.ApplicationException($"Estudante com Id {id} não encontrado.");
-            }
             try
             {
                 await _repository.DeleteAsync(student);
