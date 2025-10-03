@@ -14,13 +14,16 @@ namespace EdTech.Infrastructure.Persistence.Configurations
         public void Configure(EntityTypeBuilder<NationalIdentifier> builder)
         {
 
-            builder.HasKey(ni => ni.StudentId); 
+            builder.HasKey(ni => ni.StudentId);
 
-            builder.HasDiscriminator<string>("IdentifierType") 
+            builder.HasDiscriminator<string>("IdentifierType")
                                                               
                    .HasValue<CpfIdentifier>("CPF".ToUpper());
 
-            builder.Property(ni => ni.Number).IsRequired();
+            builder.Property(ni => ni.Number)
+                   .IsRequired()
+                   .HasMaxLength(20);
+
             builder.Ignore(ni => ni.Type);
         }
     }
