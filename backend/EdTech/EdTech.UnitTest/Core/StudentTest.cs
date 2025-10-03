@@ -1,5 +1,7 @@
 ﻿using EdTech.Core.Entities;
+using EdTech.Core.Enums;
 using EdTech.Core.Exceptions;
+using EdTech.Core.Factories;
 
 namespace EdTech.UnitTest.Core
 {
@@ -16,11 +18,9 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithEmptyName_ShouldThrowException()
         {
-            var nationalId = new CpfIdentifier("12345678900");
-
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("", "Saboia@lg.com", "123", nationalId);
+                var student = new Student("", "Saboia@lg.com", "123", createCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: name)", exception.Message);
@@ -28,11 +28,9 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithEmptyEmail_ShouldThrowException()
         {
-            var nationalId = new CpfIdentifier("12345678900");
-
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "", "123", nationalId);
+                var student = new Student("Rafael", "", "123", createCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: email)", exception.Message);
@@ -41,11 +39,9 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithEmptySchoolId_ShouldThrowException()
         {
-            var nationalId = new CpfIdentifier("12345678900");
-
             var exception = Assert.Throws<DomainException>(() =>
             {
-                var student = new Student("Rafael", "shja@lg.com", "", nationalId);
+                var student = new Student("Rafael", "shja@lg.com", "", createCpf());
             });
 
             Assert.Equal("O valor não pode ser vazio. (Parâmetro: schoolId)", exception.Message);
@@ -54,8 +50,6 @@ namespace EdTech.UnitTest.Core
         [Fact]
         public void CreateStudent_WithEmptyNationalIdentifier_ShouldThrowException()
         {
-            var nationalId = new CpfIdentifier("12345678900");
-
             var exception = Assert.Throws<DomainException>(() =>
             {
                 var student = new Student("Rafael", "shja@lg.com", "1234", null);
@@ -92,9 +86,13 @@ namespace EdTech.UnitTest.Core
 
         private Student createStudent() 
         {
-            var nationalId = new CpfIdentifier("12345678900");
-            var student = new Student("Rafael", "Saboia@gmail.com", "123", nationalId);
+            var student = new Student("Rafael", "Saboia@gmail.com", "123", createCpf());
             return student;
+        }
+
+        private NationalIdentifier createCpf()
+        {
+            return NationalIdentifierFactory.Create(NationalIdentifierType.CPF, "12345678900");
         }
 
     }
