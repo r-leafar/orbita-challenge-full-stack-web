@@ -25,16 +25,20 @@ namespace EdTech.WebApi.Middlewares
                 await context.Response.WriteAsJsonAsync(new
                 {
                     error = "Erro no Dominio",
-                    message = ex.Message
+                    message = ex.Message,
+                   innerMessage = ex.InnerException?.Message
                 });
             }
             catch (EdTech.Application.Exceptions.ApplicationException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
                 await context.Response.WriteAsJsonAsync(new
                 {
                     error = "Erro na Aplicação",
-                    message = ex.Message
+                    message = ex.Message,
+                    innerMessage = ex.InnerException?.Message
+
                 });
             }
             catch (Exception ex)
@@ -45,7 +49,8 @@ namespace EdTech.WebApi.Middlewares
                 await context.Response.WriteAsJsonAsync(new
                 {
                     error = "Erro inesperado",
-                    message = "Um erro inesperado ocorreu. Por favor, tente novamente mais tarde."
+                    message = "Um erro inesperado ocorreu. Por favor, tente novamente mais tarde.",
+                    innerMessage = ex.InnerException?.Message
                 });
             }
         }

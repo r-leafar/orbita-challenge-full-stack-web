@@ -27,7 +27,7 @@ namespace EdTech.WebApi.Endpoints
                 var command = new UpdateStudentCommand(repository);
                 await command.Handle(student);
 
-                return Results.Created($"/students/", Results.NoContent);
+                return Results.NoContent();
             }).
            WithName("UpdateStudent").
            Produces<NoContent>(StatusCodes.Status201Created).
