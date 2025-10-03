@@ -17,6 +17,7 @@ namespace EdTech.Core.Entities
             Ensure.NotNullOrWhiteSpace(name, nameof(name));
             Ensure.NotNullOrWhiteSpace(email, nameof(email));
             Ensure.NotNullOrWhiteSpace(schoolId, nameof(schoolId));
+            Ensure.NotNull(nationalIdentifier, nameof(nationalIdentifier));
 
             SetId(Guid.CreateVersion7());
             Name = name;
@@ -39,7 +40,7 @@ namespace EdTech.Core.Entities
             get => _email;
             set
             {
-                Ensure.NotNullOrWhiteSpace(value, nameof(_email));
+                Ensure.NotNullOrWhiteSpace(value, nameof(Email));
                 _email = value;
             }
         }

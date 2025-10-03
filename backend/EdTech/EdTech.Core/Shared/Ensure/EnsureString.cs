@@ -27,5 +27,12 @@ namespace EdTech.Core.Shared.Ensure
                 throw new DomainException(paramName ?? nameof(value), "O valor não pode ser nulo.");
             }
         }
+        public static void NotNull<T>(T? value, [CallerArgumentExpression("value")] string? paramName = null)
+        {
+            if (value is null)
+            {
+                throw new DomainException(paramName ?? nameof(value), "O valor não pode ser nulo.");
+            }
+        }
     }
 }
