@@ -1,16 +1,7 @@
-﻿using EdTech.Application.Dtos;
-using EdTech.Application.Dtos.Responses;
-using EdTech.Application.Exceptions;
+﻿using EdTech.Application.Dtos.Responses;
 using EdTech.Application.Mappings;
 using EdTech.Application.Validation;
-using EdTech.Core.Entities;
-using EdTech.Core.Exceptions;
 using EdTech.Core.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EdTech.Application.UseCases.Query
 {
@@ -33,7 +24,7 @@ namespace EdTech.Application.UseCases.Query
 
                return new PagedResponse<StudentResponse>(students.ToResponse(),page, pageSize,0,students.Count());
             }
-            catch (DomainException ex)
+            catch (Exceptions.ApplicationException ex)
             {
                 throw new Exceptions.ApplicationException("Erro ao consultar o estudante.", ex);
             }
