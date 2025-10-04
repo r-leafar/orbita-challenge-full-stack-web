@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EdTech.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251003022152_InitialCreate")]
+    [Migration("20251004013328_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -78,6 +78,10 @@ namespace EdTech.Infrastructure.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_students");
+
+                    b.HasIndex("SchoolId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_students_school_id");
 
                     b.ToTable("students", (string)null);
                 });

@@ -76,6 +76,10 @@ namespace EdTech.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_students");
 
+                    b.HasIndex("SchoolId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_students_school_id");
+
                     b.ToTable("students", (string)null);
                 });
 

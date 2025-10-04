@@ -43,6 +43,12 @@ namespace EdTech.Infrastructure.Migrations
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_students_school_id",
+                table: "students",
+                column: "school_id",
+                unique: true);
         }
 
         /// <inheritdoc />

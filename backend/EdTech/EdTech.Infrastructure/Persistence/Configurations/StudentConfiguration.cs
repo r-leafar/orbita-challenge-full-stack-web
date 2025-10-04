@@ -14,6 +14,9 @@ namespace EdTech.Infrastructure.Persistence.Configurations
              .IsRequired()
              .HasMaxLength(20);
 
+            builder.HasIndex(e => e.SchoolId)
+                   .IsUnique();
+
             builder.HasOne( s => s.NationalIdentifier)
                    .WithOne()
                    .HasForeignKey<NationalIdentifier>(ni => ni.StudentId)
