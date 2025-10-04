@@ -41,6 +41,18 @@ namespace EdTech.WebApi.Middlewares
 
                 });
             }
+            catch (EdTech.Infrastructure.Exceptions.InfraestructureException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+                await context.Response.WriteAsJsonAsync(new
+                {
+                    error = "Erro na Infraestrutura",
+                    message = ex.Message,
+                    innerMessage = ex.InnerException?.Message
+
+                });
+            }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro inesperado.");

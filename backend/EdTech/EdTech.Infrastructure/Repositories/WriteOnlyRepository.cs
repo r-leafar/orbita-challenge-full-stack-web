@@ -1,6 +1,7 @@
 ﻿using EdTech.Core.Entities;
 using EdTech.Core.Interfaces.Repositories;
 using EdTech.Infrastructure.Context;
+using EdTech.Infrastructure.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -22,21 +23,42 @@ namespace EdTech.Infrastructure.Repositories
 
         public async Task<TId> AddAsync(T entity)
         {
-            await dbSet.AddAsync(entity);
-            await dbContext.SaveChangesAsync();
-            return entity.Id;
+            try
+            {
+                await dbSet.AddAsync(entity);
+                await dbContext.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new InfraestructureException("Ocorreu um erro ao cadastrar", ex);
+            }
         }
 
         public async Task DeleteAsync(T entity)
         {
-            dbSet.Remove(entity);
-            await dbContext.SaveChangesAsync();
+            try
+            {
+                dbSet.Remove(entity);
+                await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new InfraestructureException("Ocorreu um erro ao deletar o registro", ex);
+            }
         }
 
         public async Task UpdateAsync(T entity)
         {
+            try
+            {
             dbSet.Update(entity);
             await dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new InfraestructureException("Ocorreu um erro ao atualizar o registro", ex);
+            }
         }
     }
 }
