@@ -61,7 +61,7 @@
 
                                         <v-list-item>
                                             <v-list-item-title class="font-weight-medium">RA:</v-list-item-title>
-                                            <v-list-item-subtitle>{{ item.id }}</v-list-item-subtitle>
+                                            <v-list-item-subtitle>{{ item.studentId }}</v-list-item-subtitle>
                                         </v-list-item>
 
                                         <v-list-item>

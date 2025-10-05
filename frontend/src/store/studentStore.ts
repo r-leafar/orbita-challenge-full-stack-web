@@ -6,7 +6,7 @@ interface Student {
     id: string;
     name: string;
     email: string;
-    StudentId: string;
+    studentId: string;
     nationalIdValue: string;
 
 }
