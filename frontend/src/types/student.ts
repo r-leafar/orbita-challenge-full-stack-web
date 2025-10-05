@@ -1,5 +1,5 @@
 export type Student = {
-    id: string | null; // Opcional, usado na edição
+    id: string;
     name: string;
     email: string;
     studentId: string;
