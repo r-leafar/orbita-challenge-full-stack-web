@@ -1,5 +1,5 @@
 <template>
-    <AppBarMenu :show-menu="true">
+    <AppMenuBar :show-menu="true">
         <slot>
             <v-main>
                 <v-container>
@@ -87,7 +87,7 @@
                 </v-container>
             </v-main>
         </slot>
-    </AppBarMenu>
+    </AppMenuBar>
 </template>
 
 <script setup lang="ts">
