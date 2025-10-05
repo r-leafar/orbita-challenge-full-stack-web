@@ -53,14 +53,26 @@ const props = defineProps({
 const isEditing = computed(() => props.mode === 'edit');
 const cardTitle = computed(() => isEditing.value ? 'Editar Aluno' : 'Cadastrar Novo Aluno');
 
-console.log(studentStore.getStudentSelected);
 const student = ref({
+    id: '',
     name: '',
     email: '',
     studentId: '',
     nationalId: ''
 });
 
+if (isEditing) {
+    const studentToEdit = studentStore.getStudentSelected;
+    if (studentToEdit) {
+        student.value = {
+            id: studentToEdit.id,
+            name: studentToEdit.name,
+            email: studentToEdit.email,
+            studentId: studentToEdit.studentId,
+            nationalId: studentToEdit.nationalIdValue
+        };
+    }
+}
 
 const { values, formRef, rules, validate } = useForm(
     {
@@ -108,7 +120,7 @@ const RegisterStudent = async () => {
     }
 };
 function closeRegisterStudent() {
+    studentStore.cleanSelection();
     emit('closeRegisterStudent');
 }
-
 </script>
