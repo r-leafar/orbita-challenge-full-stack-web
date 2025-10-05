@@ -2,8 +2,7 @@
   <v-app>
     <v-main>
       <router-view />
-      <v-snackbar v-model="notificationStore.show" :color="notificationStore.color" timeout="5000"
-        location="bottom right">
+      <v-snackbar v-model="notificationStore.show" :color="notificationStore.color" timeout="5000" location="top">
         {{ notificationStore.message }}
         <template #actions>
           <v-btn :color="notificationStore.color === 'error' ? 'white' : 'black'" variant="text"
