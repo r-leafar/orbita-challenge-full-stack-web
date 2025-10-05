@@ -1,23 +1,42 @@
 services:
-  webapi:
+  service_webapi:
     build:
       context: ./backend/EdTech     # raiz onde está o Dockerfile
       dockerfile: Dockerfile
     container_name: edtech_webapi
     ports:
-      - "8080:8080"
-      - "8081:8081"
+      - "${HOST_HTTP_PORT}:${WEBAPI_HTTP_PORT}"
+      - "${HOST_HTTPS_PORT}:${WEBAPI_HTTPS_PORT}"
     depends_on:
       - postgres
     environment:
       # Conexão com o banco (aqui o host é o nome do serviço "postgres")
-      POSTGRES_SERVER: server-db
+      POSTGRES_SERVER: service_postgres
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      ASPNETCORE_URLS: "http://+:${WEBAPI_HTTP_PORT};https://+:${WEBAPI_HTTPS_PORT}"
+    restart: always
+  
+  service_frontend:
+    build:
+      # 🔑 Caminho para a pasta raiz do seu projeto Vue
+      context: ./frontend 
+      dockerfile: Dockerfile 
+    container_name: frontend
+
+    # Mapeia a porta 80 do container (onde o Nginx roda) para a porta local 
+    ports:
+      - "${VITE_PORT}:80" 
+      
+    # 🔑 Variável de ambiente usada pelo Vue/Vite para saber onde o backend está
+    environment:
+      # O host é o nome do serviço do backend (webapi)
+      VITE_APP_API_URL: http://service_webapi:${WEBAPI_HTTP_PORT}
+      
     restart: always
 
-  postgres:
+  service_postgres:
     container_name: server-db
     image: postgres:17.6 
     
