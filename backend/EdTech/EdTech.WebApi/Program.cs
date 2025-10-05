@@ -1,16 +1,21 @@
 using EdTech.Infrastructure;
 using EdTech.Infrastructure.Context;
 using EdTech.WebApi.Endpoints;
+using EdTech.WebApi.Extensions;
 using EdTech.WebApi.Middlewares;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructureDI(builder.Configuration);
+var configuration = builder.Configuration;
 
-// Add services to the container.
+builder.Services.AddInfrastructureDI(configuration);
+builder.Services.AddFrontendCorsPolicy(configuration);
 
 var app = builder.Build();
+
+app.UseCors("AllowFrontend");
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
