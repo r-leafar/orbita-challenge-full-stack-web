@@ -27,6 +27,9 @@ export const useStudentStore = defineStore('student', {
         async setStudentToEdit(student: Student) {
             this.studentSelected = student;
         },
+        async cleanSelection() {
+            this.studentSelected = null;
+        },
 
         async getStudentsPaged(page: number = 1) {
             const response = await axios.get<PagedResponse<Student>>(

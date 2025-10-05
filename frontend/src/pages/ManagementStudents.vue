@@ -92,6 +92,7 @@ function sendMessage() {
 }
 function openRegisterStudentForm() {
     currentMode.value = "create";
+    studentStore.cleanSelection();
     registerStudentDialog.value = true;
 }
 function openEditStudentForm(student: Student) {
