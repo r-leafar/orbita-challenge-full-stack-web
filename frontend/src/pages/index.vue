@@ -1,7 +1,7 @@
 <template>
   <AppMenuBar>
     <slot>
-      <v-form class="py-12" ref="formRef" @submit.prevent="submitForm">
+      <v-form class="fill-height d-flex align-center justify-center" ref="formRef" @submit.prevent="submitForm">
         <v-container>
           <v-card class="mx-auto pa-12 pb-8 mt-4" elevation="8" max-width="448" rounded="lg">
             <div class="text-subtitle-1 text-medium-emphasis">Email</div>
