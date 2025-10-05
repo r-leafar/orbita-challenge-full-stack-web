@@ -1,5 +1,5 @@
 <template>
-  <AppBar>
+  <AppMenuBar>
     <slot>
       <v-form class="py-12" ref="formRef" @submit.prevent="submitForm">
         <v-container>
@@ -34,7 +34,7 @@
         </v-container>
       </v-form>
     </slot>
-  </AppBar>
+  </AppMenuBar>
 </template>
 
 <script lang="ts" setup>
