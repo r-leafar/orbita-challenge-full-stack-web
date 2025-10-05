@@ -94,6 +94,7 @@
 import { onMounted, ref, reactive } from 'vue';
 import { useStudentStore } from '@/stores/studentStore'
 import { useForm } from '@/composables/useForm'
+import { useNotificationStore } from '@/stores/notificationStore';
 
 const snackbar = ref(false)
 const text = ref('O estudante foi cadastrado com sucesso!')
@@ -104,6 +105,7 @@ const confirmDialog = ref(false);
 const idForDelete = ref('');
 
 const studentStore = useStudentStore();
+const notificationStore = useNotificationStore();
 
 const student = ref({
     name: '',
@@ -141,6 +143,7 @@ function abrirConfirmDialog(id: string) {
 }
 function deleteStudent() {
     studentStore.deleteStudent(idForDelete.value);
+    notificationStore.showSnackbar('Aluno excluído com sucesso!', 'error');
 }
 
 function sendMessage() {
@@ -160,17 +163,24 @@ function closeRegisterStudent() {
 const RegisterStudent = async () => {
     const { valid } = await validate()
     if (!valid) return
+    try {
+        await studentStore.addStudent({
+            Name: student.value.name,
+            Email: student.value.email,
+            StudentId: student.value.studentId,
+            NationalIdValue: student.value.nationalId,
+            NationalIdType: "CPF"
+        })
+        notificationStore.showSnackbar('Aluno cadastrado com sucesso!', 'success');
+        closeRegisterStudent()
+    } catch (error: any) {
+        console.error('Erro no cadastro:', error);
 
-    await studentStore.addStudent({
-        Name: student.value.name,
-        Email: student.value.email,
-        StudentId: student.value.studentId,
-        NationalIdValue: student.value.nationalId,
-        NationalIdType: "CPF"
-    })
+        // 🔑 TRATAMENTO DE ERRO: Notifica o usuário
+        const errorMessage = 'Ocorreu um erro desconhecido no cadastro.';
+        notificationStore.showSnackbar(errorMessage, 'error');
 
-    closeRegisterStudent()
-    snackbar.value = true
+    }
 }
 
 onMounted(() => {
