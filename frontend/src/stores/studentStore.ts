@@ -1,30 +1,9 @@
 /// <reference types="node" />
 import { defineStore } from 'pinia'
+import type { Student, CreateStudentRequest } from '@/types/student';
+import type { PagedResponse } from '@/types/paged-response';
 import axios from "axios";
 
-interface Student {
-    id: string;
-    name: string;
-    email: string;
-    studentId: string;
-    nationalIdValue: string;
-
-}
-interface CreateStudentRequest {
-    Name: string;
-    Email: string;
-    StudentId: string;
-    NationalIdType: string;
-    NationalIdValue: string;
-}
-
-interface PagedResponse<T> {
-    data: T[];
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalRecords: number;
-}
 const PAGE_SIZE = 8;
 const API_BASE_URL = import.meta.env.VITE_APP_API_URL;
 
