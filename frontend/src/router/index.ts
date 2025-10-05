@@ -5,8 +5,20 @@
  */
 
 // Composables
+import Index from '@/pages/index.vue'
+import ManagementStudents from '@/pages/ManagementStudents.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import { routes } from 'vue-router/auto-routes'
+
+
+const routes = [
+  { path: '/', name: 'home', component: Index },
+  {
+    path: '/management-students',
+    name: 'management-students',
+    component: ManagementStudents,
+    meta: { requiresAuth: true } // 🔒 rota protegida
+  }
+]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
