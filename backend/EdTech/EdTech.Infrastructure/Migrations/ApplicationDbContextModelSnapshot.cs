@@ -71,14 +71,14 @@ namespace EdTech.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)")
-                        .HasColumnName("school_id");
+                        .HasColumnName("student_id");
 
                     b.HasKey("Id")
                         .HasName("pk_students");
 
                     b.HasIndex("studentId")
                         .IsUnique()
-                        .HasDatabaseName("ix_students_school_id");
+                        .HasDatabaseName("ix_students_student_id");
 
                     b.ToTable("students", (string)null);
                 });
