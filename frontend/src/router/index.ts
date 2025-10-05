@@ -7,7 +7,8 @@
 // Composables
 import Index from '@/pages/index.vue'
 import ManagementStudents from '@/pages/ManagementStudents.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthUserStore } from '@/store/authUserStore'
+import { createRouter, createWebHistory, type RouteLocationRaw } from 'vue-router'
 
 
 const routes = [
@@ -25,23 +26,24 @@ const router = createRouter({
   routes,
 })
 
-// Workaround for https://github.com/vitejs/vite/issues/11804
-router.onError((err, to) => {
-  if (err?.message?.includes?.('Failed to fetch dynamically imported module')) {
-    if (localStorage.getItem('vuetify:dynamic-reload')) {
-      console.error('Dynamic import error, reloading page did not fix it', err)
-    } else {
-      console.log('Reloading page to fix dynamic import error')
-      localStorage.setItem('vuetify:dynamic-reload', 'true')
-      location.assign(to.fullPath)
-    }
-  } else {
-    console.error(err)
+router.beforeEach(async (to) => {
+  const authUserStore = useAuthUserStore()
+
+  const requiresAuth = to.meta.requiresAuth
+
+
+  if (requiresAuth && !authUserStore.isAuthenticated) {
+
+    const redirectLocation: RouteLocationRaw = { path: '/' }
+    return redirectLocation
   }
-})
 
-router.isReady().then(() => {
-  localStorage.removeItem('vuetify:dynamic-reload')
-})
+  // Opcional: Impedir que usuários logados acessem a página de Login
+  if ((to.path === '/') && authUserStore.isAuthenticated) {
+    // Redireciona para uma página logada
+    const redirectLocation: RouteLocationRaw = { path: '/management-students' }
+    return redirectLocation
+  }
 
+})
 export default router
