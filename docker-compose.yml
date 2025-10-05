@@ -8,7 +8,7 @@ services:
       - "${HOST_HTTP_PORT}:${WEBAPI_HTTP_PORT}"
       - "${HOST_HTTPS_PORT}:${WEBAPI_HTTPS_PORT}"
     depends_on:
-      - postgres
+      - service_postgres
     environment:
       # Conexão com o banco (aqui o host é o nome do serviço "postgres")
       POSTGRES_SERVER: service_postgres
