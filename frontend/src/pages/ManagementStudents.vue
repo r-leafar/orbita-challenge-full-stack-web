@@ -86,15 +86,6 @@
                     </v-row>
                 </v-container>
             </v-main>
-            <v-snackbar v-model="snackbar" :timeout="3000" location="top">
-                {{ text }}
-
-                <template v-slot:actions>
-                    <v-btn color="blue" variant="text" @click="snackbar = false">
-                        Fechar
-                    </v-btn>
-                </template>
-            </v-snackbar>
         </slot>
     </AppMenuBar>
 </template>
