@@ -10,7 +10,7 @@ namespace EdTech.Application.Dtos.Responses
         Guid Id,
         string Name,
         string Email,
-        string SchoolId,
+        string studentId,
         string NationalIdValue
     );
 }

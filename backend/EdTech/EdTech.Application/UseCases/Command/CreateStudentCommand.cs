@@ -25,7 +25,7 @@ namespace EdTech.Application.UseCases.Command
             var student = new Student(
                    name: dto.Name,
                    email: dto.Email,
-                   schoolId: dto.SchoolId,
+                   studentId: dto.studentId,
                    nationalIdentifier : NationalIdentifierFactory.Create(enumNationalIdentifier, dto.NationalIdValue)
                );
 

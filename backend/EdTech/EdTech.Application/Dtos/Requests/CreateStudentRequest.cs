@@ -9,7 +9,7 @@ namespace EdTech.Application.Dtos.Requests
     public record CreateStudentRequest(
         string Name,
         string Email,
-        string SchoolId,
+        string studentId,
         string NationalIdType,
         string NationalIdValue
     );

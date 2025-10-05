@@ -33,7 +33,7 @@ namespace EdTech.UnitTest.Application.Command
 
             Assert.Equal(student.Name, result.Name);
             Assert.Equal(student.Email, result.Email);
-            Assert.Equal(student.SchoolId, result.SchoolId);
+            Assert.Equal(student.studentId, result.studentId);
         }
 
         [Fact]

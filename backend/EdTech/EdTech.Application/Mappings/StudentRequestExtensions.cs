@@ -16,7 +16,7 @@ namespace EdTech.Application.Mappings
                 id,
                 request.Name,
                 request.Email,
-                request.SchoolId,
+                request.studentId,
                 request.NationalIdValue
             );
         }

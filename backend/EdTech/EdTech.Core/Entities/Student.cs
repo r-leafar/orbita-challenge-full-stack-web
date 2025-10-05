@@ -12,17 +12,17 @@ namespace EdTech.Core.Entities
     public class Student : BaseEntity<Guid>
     {
         private Student() { }
-        public Student(string name, string email, string schoolId, NationalIdentifier nationalIdentifier)
+        public Student(string name, string email, string studentId, NationalIdentifier nationalIdentifier)
         {
             Ensure.NotNullOrWhiteSpace(name, nameof(name));
             Ensure.NotNullOrWhiteSpace(email, nameof(email));
-            Ensure.NotNullOrWhiteSpace(schoolId, nameof(schoolId));
+            Ensure.NotNullOrWhiteSpace(studentId, nameof(studentId));
             Ensure.NotNull(nationalIdentifier, nameof(nationalIdentifier));
 
             SetId(Guid.CreateVersion7());
             Name = name;
             Email = email;
-            SchoolId = schoolId;
+            this.studentId = studentId;
             NationalIdentifier = nationalIdentifier;
         }
         public string Name
@@ -45,7 +45,7 @@ namespace EdTech.Core.Entities
             }
         }
         private string _email;
-        public string SchoolId { get; }
+        public string studentId { get; }
         public NationalIdentifier NationalIdentifier { get; }
 
        

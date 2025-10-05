@@ -67,7 +67,7 @@ namespace EdTech.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
-                    b.Property<string>("SchoolId")
+                    b.Property<string>("studentId")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)")
@@ -76,7 +76,7 @@ namespace EdTech.Infrastructure.Migrations
                     b.HasKey("Id")
                         .HasName("pk_students");
 
-                    b.HasIndex("SchoolId")
+                    b.HasIndex("studentId")
                         .IsUnique()
                         .HasDatabaseName("ix_students_school_id");
 

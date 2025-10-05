@@ -17,7 +17,7 @@ namespace EdTech.Application.Mappings
                 student.Id,
                 student.Name,
                 student.Email,
-                student.SchoolId,
+                student.studentId,
                 student.NationalIdentifier.Number
             );
         }
@@ -32,7 +32,7 @@ namespace EdTech.Application.Mappings
                 student.Id,
                 student.Name,
                 student.Email,
-                student.SchoolId,
+                student.studentId,
                 student.NationalIdentifier?.Number));
         }
     }
