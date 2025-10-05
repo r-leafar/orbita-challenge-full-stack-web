@@ -1,4 +1,3 @@
-// stores/notificationStore.js (Exemplo Pinia)
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
@@ -12,10 +11,10 @@ export const useNotificationStore = defineStore('notification', () => {
         color.value = type === 'error' ? 'error' : 'success'; // Define a cor
         show.value = true;
 
-        // Auto-esconder após 5 segundos
+        // Auto-esconder após 3 segundos
         setTimeout(() => {
             show.value = false;
-        }, 5000);
+        }, 3000);
     }
 
     return { show, message, color, showSnackbar };
