@@ -4,7 +4,7 @@
     {
         public static IServiceCollection AddFrontendCorsPolicy(this IServiceCollection services, IConfiguration configuration)
         {
-            var clientBaseUrl = configuration["VITE_CLIENT_URL"] ?? "http://localhost";
+            var clientBaseUrl = configuration["VITE_CLIENT_BASE_URL"] ?? "http://localhost";
             var clientPort = configuration["VITE_PORT"] ?? "3000";
             var clientUrl = $"{clientBaseUrl}:{clientPort}";
 
