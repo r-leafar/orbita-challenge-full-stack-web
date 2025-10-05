@@ -7,7 +7,7 @@
 // Composables
 import Index from '@/pages/index.vue'
 import ManagementStudents from '@/pages/ManagementStudents.vue'
-import { useAuthUserStore } from '@/store/authUserStore'
+import { useAuthUserStore } from '@/stores/authUserStore'
 import { createRouter, createWebHistory, type RouteLocationRaw } from 'vue-router'
 
 

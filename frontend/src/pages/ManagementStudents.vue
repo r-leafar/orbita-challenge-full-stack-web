@@ -86,14 +86,26 @@
                     </v-row>
                 </v-container>
             </v-main>
+            <v-snackbar v-model="snackbar" :timeout="3000" location="top">
+                {{ text }}
+
+                <template v-slot:actions>
+                    <v-btn color="blue" variant="text" @click="snackbar = false">
+                        Fechar
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </slot>
     </AppMenuBar>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue';
-import { useStudentStore } from '@/store/studentStore'
+import { useStudentStore } from '@/stores/studentStore'
 import { useForm } from '@/composables/useForm'
+
+const snackbar = ref(false)
+const text = ref('O estudante foi cadastrado com sucesso!')
 
 const searchTerm = ref('');
 const registerStudentDialog = ref(false);
@@ -167,6 +179,7 @@ const RegisterStudent = async () => {
     })
 
     closeRegisterStudent()
+    snackbar.value = true
 }
 
 onMounted(() => {
