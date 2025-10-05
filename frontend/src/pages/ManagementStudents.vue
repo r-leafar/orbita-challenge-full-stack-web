@@ -9,10 +9,11 @@
 
                             <v-text-field :append-icon="'mdi-account-plus-outline'"
                                 :append-inner-icon="'mdi-account-search-outline'" @click:append-inner="sendMessage"
-                                @click:append="registerStudentDialog = true" v-model="searchTerm" label="Nome do aluno">
+                                @click:append="openRegisterStudentForm()" v-model="searchTerm" label="Nome do aluno">
                             </v-text-field>
                             <v-dialog v-model="registerStudentDialog" :width="$vuetify.display.xs ? '320px' : '500px'">
-                                <StudentForm @closeRegisterStudent="registerStudentDialog = false" />
+                                <StudentForm :mode="currentMode"
+                                    @closeRegisterStudent="registerStudentDialog = false" />
                             </v-dialog>
                         </v-col>
                     </v-row>
@@ -44,7 +45,8 @@
                                 </v-card-text>
 
                                 <v-card-actions>
-                                    <v-btn variant="tonal" color="gray">Editar</v-btn>
+                                    <v-btn @click="openEditStudentForm(item)" variant="tonal"
+                                        color="gray">Editar</v-btn>
 
                                     <v-btn @click="abrirConfirmDialog(item.id)" variant="tonal" color="red">Excluir
                                     </v-btn>
@@ -62,11 +64,13 @@
 import { onMounted, ref, reactive } from 'vue';
 import { useStudentStore } from '@/stores/studentStore'
 import { useNotificationStore } from '@/stores/notificationStore';
+import type { Student } from '@/types/student';
 
 const searchTerm = ref('');
 const registerStudentDialog = ref(false);
 const confirmDialog = ref(false);
 const idForDelete = ref('');
+const currentMode = ref<'create' | 'edit'>('create');
 
 const studentStore = useStudentStore();
 const notificationStore = useNotificationStore();
@@ -86,14 +90,15 @@ function deleteStudent() {
 function sendMessage() {
     alert(`Você pesquisou por: ${searchTerm.value}`);
 }
-// function clearRegistrationForm() {
-//     (Object.keys(student.value) as Array<keyof typeof student.value>).forEach(key => {
-//         student.value[key] = '';
-//     });
-// }
-
-
-
+function openRegisterStudentForm() {
+    currentMode.value = "create";
+    registerStudentDialog.value = true;
+}
+function openEditStudentForm(student: Student) {
+    currentMode.value = "edit";
+    studentStore.setStudentToEdit(student);
+    registerStudentDialog.value = true;
+}
 
 onMounted(() => {
     studentStore.getStudentsPaged();

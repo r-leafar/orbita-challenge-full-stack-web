@@ -1,17 +1,18 @@
 <template>
     <v-form ref="formRef" @submit.prevent="RegisterStudent">
-        <v-card max-width="344" title="Registrar Aluno">
+        <v-card max-width="344" :title="cardTitle">
             <v-container>
                 <v-text-field v-model="student.name" color="primary" label="Nome" variant="underlined"></v-text-field>
 
                 <v-text-field :rules="[...rules.email]" v-model="student.email" color="primary" label="E-mail"
                     variant="underlined"></v-text-field>
 
-                <v-text-field :rules="[...rules.studentId]" v-model="student.studentId" color="primary" label="RA"
-                    variant="underlined"></v-text-field>
+                <v-text-field :rules="[...rules.studentId]" :readonly="isEditing" v-model="student.studentId"
+                    color="primary" label="RA" variant="underlined"></v-text-field>
 
-                <v-text-field maxlength="11" :rules="[...rules.nationalId]" v-model="student.nationalId" color="primary"
-                    label="CPF" placeholder="Digite o seu CPF." variant="underlined"></v-text-field>
+                <v-text-field maxlength="11" :rules="[...rules.nationalId]" :readonly="isEditing"
+                    v-model="student.nationalId" color="primary" label="CPF" placeholder="Digite o seu CPF."
+                    variant="underlined"></v-text-field>
             </v-container>
 
             <v-divider></v-divider>
@@ -33,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStudentStore } from '@/stores/studentStore';
 import { useForm } from '@/composables/useForm';
 import { useNotificationStore } from '@/stores/notificationStore';
@@ -41,15 +42,25 @@ import { useNotificationStore } from '@/stores/notificationStore';
 const studentStore = useStudentStore();
 const notificationStore = useNotificationStore();
 const emit = defineEmits(['registerStudent', 'closeRegisterStudent']);
-const emitRegisterStudent = () => emit('registerStudent');
-const emitCloseRegisterStudent = () => emit('closeRegisterStudent');
 
+const props = defineProps({
+    mode: {
+        type: String,
+        default: 'create',
+        validator: (value) => ['create', 'edit'].includes(value as string),
+    }
+});
+const isEditing = computed(() => props.mode === 'edit');
+const cardTitle = computed(() => isEditing.value ? 'Editar Aluno' : 'Cadastrar Novo Aluno');
+
+console.log(studentStore.getStudentSelected);
 const student = ref({
     name: '',
     email: '',
     studentId: '',
     nationalId: ''
 });
+
 
 const { values, formRef, rules, validate } = useForm(
     {
@@ -76,7 +87,7 @@ const { values, formRef, rules, validate } = useForm(
 );
 
 const RegisterStudent = async () => {
-    emitRegisterStudent();
+    emit('registerStudent');
     const { valid } = await validate();
     if (!valid) return;
 
@@ -90,14 +101,14 @@ const RegisterStudent = async () => {
         })
 
         notificationStore.showSnackbar('Aluno cadastrado com sucesso!', 'success');
-        emitCloseRegisterStudent();
+        emit('closeRegisterStudent');
     } catch (error) {
         const errorMessage = 'Ocorreu um erro desconhecido no cadastro.';
         notificationStore.showSnackbar(errorMessage, 'error');
     }
 };
 function closeRegisterStudent() {
-    emitCloseRegisterStudent();
+    emit('closeRegisterStudent');
 }
 
 </script>
