@@ -1,12 +1,12 @@
 services:
   service_webapi:
     build:
-      context: ./backend/EdTech     # raiz onde está o Dockerfile
+      context: ./backend/EdTech # raiz onde está o Dockerfile
       dockerfile: Dockerfile
     container_name: edtech_webapi
     ports:
       - "${HOST_HTTP_PORT}:${WEBAPI_HTTP_PORT}"
-      - "${HOST_HTTPS_PORT}:${WEBAPI_HTTPS_PORT}"
+      # - "${HOST_HTTPS_PORT}:${WEBAPI_HTTPS_PORT}"
     depends_on:
       - service_postgres
     environment:
@@ -15,50 +15,50 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      ASPNETCORE_URLS: "http://+:${WEBAPI_HTTP_PORT};https://+:${WEBAPI_HTTPS_PORT}"
+      #https://+:${WEBAPI_HTTPS_PORT}
+      ASPNETCORE_URLS: "http://+:${WEBAPI_HTTP_PORT}"
     restart: always
-  
+
   service_frontend:
     build:
       # 🔑 Caminho para a pasta raiz do seu projeto Vue
-      context: ./frontend 
-      dockerfile: Dockerfile 
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: frontend
 
-    # Mapeia a porta 80 do container (onde o Nginx roda) para a porta local 
+    # Mapeia a porta 80 do container (onde o Nginx roda) para a porta local
     ports:
-      - "${VITE_PORT}:80" 
-      
+      - "${VITE_PORT}:80"
+
     # 🔑 Variável de ambiente usada pelo Vue/Vite para saber onde o backend está
     environment:
       # O host é o nome do serviço do backend (webapi)
       VITE_APP_API_URL: http://service_webapi:${WEBAPI_HTTP_PORT}
-      
+
     restart: always
 
   service_postgres:
     container_name: server-db
-    image: postgres:17.6 
-    
+    image: postgres:17.6
+
     ports:
       - "${POSTGRES_PORT}:5432"
-      
+
     environment:
       # Variáveis de ambiente padrão do PostgreSQL
-      POSTGRES_USER:  ${POSTGRES_USER}      # POSTGRES_USER
-      POSTGRES_PASSWORD:  ${POSTGRES_PASSWORD} # POSTGRES_PASSWORD
-      POSTGRES_DB:  ${POSTGRES_DB}    # POSTGRES_DB
-      
-    # Mapeia um volume para persistir os dados do banco de dados 
+      POSTGRES_USER: ${POSTGRES_USER} # POSTGRES_USER
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} # POSTGRES_PASSWORD
+      POSTGRES_DB: ${POSTGRES_DB} # POSTGRES_DB
+
+    # Mapeia um volume para persistir os dados do banco de dados
     # (dados não serão perdidos ao parar o container)
     volumes:
       - ./initdb:/docker-entrypoint-initdb.d
       - postgres_data:/var/lib/postgresql/data
-    
+
     # Reinicia o container se ele falhar
     restart: always
 
 # Definição do volume para persistência de dados
 volumes:
   postgres_data:
-  
