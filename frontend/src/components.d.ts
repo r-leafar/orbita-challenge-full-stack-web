@@ -12,5 +12,6 @@ declare module 'vue' {
     ConfirmDialog: typeof import('./components/ConfirmDialog.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StudentForm: typeof import('./components/StudentForm.vue')['default']
   }
 }
