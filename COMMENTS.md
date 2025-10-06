@@ -54,8 +54,11 @@ docker compose up --build
 Após o build:
 
 🌐 Frontend acessível em: http://localhost:${VITE_PORT}
+
 ⚙️ API acessível em: http://localhost:${HOST_HTTP_PORT}
+
 🗄️ Banco PostgreSQL rodando localmente na porta ${POSTGRES_PORT}
+
 Se tudo estiver correto, o frontend deve comunicar-se automaticamente com o backend via a URL definida em VITE_APP_API_URL
 ---
 # Documentação do Backend (ASP.NET Core - Minimal API)
