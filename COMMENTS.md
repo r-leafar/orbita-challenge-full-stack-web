@@ -142,7 +142,7 @@ Esse design segue o **padrão Strategy**, facilitando extensão e manutenção s
 
 ---
 
-## 6. Melhorias Futuras
+## 6. Melhorias Futuras 🚀
 
 ### 🔒 Backend
 
@@ -151,3 +151,57 @@ Esse design segue o **padrão Strategy**, facilitando extensão e manutenção s
 - Criar **testes de integração** entre módulos.
 
 ---
+# Documentação do Frontend (Vue + Vuetify)
+
+O projeto segue a estrutura padrão do **Vue 3**, utilizando **Componentes de Arquivo Único (.vue)** para representar cada tela.  
+Essa abordagem, combinada com um **roteador dedicado**, melhora a organização, manutenção e extensibilidade do sistema, permitindo mapear claramente as rotas e os componentes responsáveis por cada visualização.
+
+---
+
+## 1. 📁 Estrutura de Pastas
+
+### 🧠 Lógicas de Negócio (Stores)
+- **`src/stores/studentStore.js`** — Responsável por toda a lógica de negócio relacionada aos alunos.  
+- **`src/stores/notificationStore.js`** — Gerencia mensagens e notificações exibidas na interface.  
+- **`src/stores/authUserStore.js`** — Controla a autenticação do usuário (simulação de login/logout).
+
+---
+
+### ⚙️ Funções Reutilizáveis (Composables)
+- **`src/composables/useAuth.js`** — Contém funções para autenticação (login e logout).  
+- **`src/composables/useForm.js`** — Fornece funções utilitárias para validação de formulários.
+
+---
+
+### 🧩 Componentes Utilizados
+- **`src/components/AppMenuBar.vue`** — Componente do menu principal de navegação.  
+- **`src/components/ConfirmDialog.vue`** — Diálogo genérico de confirmação de ações.  
+- **`src/components/StudentForm.vue`** — Formulário responsável por registrar e atualizar dados de alunos.
+
+---
+
+### 🖥️ Páginas
+- **`"/"`** — Página de login. Caso o usuário já esteja autenticado, redireciona para **Gerenciar Alunos**.  
+- **`"/management-students"`** — Página principal de gerenciamento de alunos.
+
+---
+
+### 🧾 Tipos
+- **`src/types/*`** — Contém os tipos e interfaces TypeScript utilizados em toda a aplicação.
+---
+## 2. Pacotes Utilizados
+| Pacote                         | Descrição |
+| ------------------------------- | ---------- |
+| **`axios`**                    | Utilizado para realizar requisições HTTP de forma simples e eficiente. |
+| **`pinia`**                    | Biblioteca oficial de gerenciamento de estado do Vue 3, sucessora do Vuex. |
+| **`pinia-plugin-persistedstate`** | Plugin do Pinia que permite persistir estados no `localStorage`, mantendo dados entre recarregamentos da página. |
+| **`vuetify`**                  | Framework de componentes UI baseado em Material Design, utilizado para criação de interfaces modernas e responsivas. |
+| **`vue-router`**               | Biblioteca oficial de roteamento do Vue, responsável pelo controle de navegação entre as páginas da aplicação. |
+
+## 3. Melhorias Futuras 🚀
+
+### 🔒 Frontend
+- Migrar o armazenamento local para **cookies HTTP-only**, aumentando a segurança contra XSS.  
+- Melhorar o sistema de **paginação**, exibindo controles apenas quando houver registros disponíveis.  
+- **Refatorar o código**, priorizando legibilidade e reutilização de componentes.  
+- Implementar **testes unitários e de interface**, garantindo maior confiabilidade e cobertura do sistema.
