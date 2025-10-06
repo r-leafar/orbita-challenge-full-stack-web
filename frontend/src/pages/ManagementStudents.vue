@@ -19,7 +19,8 @@
                         </v-col>
                     </v-row>
                     <v-row>
-                        <v-col v-for="item in studentStore.students" cols="12" sm="6" md="4" lg="3">
+                        <v-col v-for="item in studentStore.students.sort((a, b) => a.Name.localeCompare(b.Name))"
+                            cols="12" sm="6" md="4" lg="3">
                             <v-card flat class="border" :key="item.Id">
                                 <v-card-subtitle class="pt-3">Informações</v-card-subtitle>
                                 <v-card-text>
