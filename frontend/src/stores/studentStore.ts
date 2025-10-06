@@ -60,6 +60,18 @@ export const useStudentStore = defineStore('student', {
                 this.students = [];
             }
         },
+        async getStudentsByNamePaged(name: string, page: number = 1) {
+            const response = await axios.get<PagedResponse<Student>>(
+                `${API_BASE_URL}/api/v1/students/${name}/${page}/${PAGE_SIZE}`
+            );
+
+            if (response.data.Data && response.data.Data.length > 0) {
+                this.students = [...response.data.Data]; // nova referência
+            } else {
+                this.students = [];
+            }
+        }
+        ,
         async deleteStudent(id: string) {
             const response = await axios.delete(`${API_BASE_URL}/api/v1/students/${id}`);
             if (response.status === 200 || response.status === 204) {

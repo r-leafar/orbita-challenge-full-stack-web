@@ -8,8 +8,9 @@
                         <v-col cols="12" md="8">
 
                             <v-text-field :append-icon="'mdi-account-plus-outline'"
-                                :append-inner-icon="'mdi-account-search-outline'" @click:append-inner="sendMessage"
-                                @click:append="openRegisterStudentForm()" v-model="searchTerm" label="Nome do aluno">
+                                :append-inner-icon="'mdi-account-search-outline'" @keydown.enter="searchStudent"
+                                @click:append-inner="searchStudent" @click:append="openRegisterStudentForm()"
+                                v-model="searchTerm" label="Nome do aluno">
                             </v-text-field>
                             <v-dialog v-model="registerStudentDialog" :width="$vuetify.display.xs ? '320px' : '500px'">
                                 <StudentForm :mode="currentMode"
@@ -48,7 +49,7 @@
                                     <v-btn @click="openEditStudentForm(item)" variant="tonal"
                                         color="gray">Editar</v-btn>
 
-                                    <v-btn @click="abrirConfirmDialog(item.Id)" variant="tonal" color="red">Excluir
+                                    <v-btn @click="openConfirmDialog(item.Id)" variant="tonal" color="red">Excluir
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>
@@ -61,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, reactive } from 'vue';
+import { onMounted, ref, reactive, computed, watch } from 'vue';
 import { useStudentStore } from '@/stores/studentStore'
 import { useNotificationStore } from '@/stores/notificationStore';
 import type { Student } from '@/types/student';
@@ -75,9 +76,16 @@ const currentMode = ref<'create' | 'edit'>('create');
 const studentStore = useStudentStore();
 const notificationStore = useNotificationStore();
 
+const searchTermIsEmpty = computed(() => searchTerm.value.trim() === '');
+
+watch(searchTermIsEmpty, (newValue) => {
+    if (newValue === true) {
+        studentStore.getStudentsPaged(1);
+    }
+});
 
 
-function abrirConfirmDialog(id: string) {
+function openConfirmDialog(id: string) {
     confirmDialog.value = true;
     idForDelete.value = id;
     console.log(idForDelete.value);
@@ -87,8 +95,12 @@ function deleteStudent() {
     notificationStore.showSnackbar('Aluno excluído com sucesso!', 'error');
 }
 
-function sendMessage() {
-    alert(`Você pesquisou por: ${searchTerm.value}`);
+function searchStudent() {
+    if (searchTerm.value.trim() === '') {
+        studentStore.getStudentsPaged(1);
+        return;
+    }
+    studentStore.getStudentsByNamePaged(searchTerm.value, 1);
 }
 function openRegisterStudentForm() {
     currentMode.value = "create";
