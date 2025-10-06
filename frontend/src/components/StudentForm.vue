@@ -1,5 +1,5 @@
 <template>
-    <v-form ref="formRef" @submit.prevent="RegisterStudent">
+    <v-form ref="formRef" @submit.prevent="handleFormSubmit">
         <v-card max-width="344" :title="cardTitle">
             <v-container>
                 <v-text-field v-model="student.name" color="primary" label="Nome" variant="underlined"></v-text-field>
@@ -65,11 +65,11 @@ if (isEditing) {
     const studentToEdit = studentStore.getStudentSelected;
     if (studentToEdit) {
         student.value = {
-            id: studentToEdit.id,
-            name: studentToEdit.name,
-            email: studentToEdit.email,
-            studentId: studentToEdit.studentId,
-            nationalId: studentToEdit.nationalIdValue
+            id: studentToEdit.Id,
+            name: studentToEdit.Name,
+            email: studentToEdit.Email,
+            studentId: studentToEdit.StudentId,
+            nationalId: studentToEdit.NationalIdValue
         };
     }
 }
@@ -100,9 +100,6 @@ const { values, formRef, rules, validate } = useForm(
 
 const RegisterStudent = async () => {
     emit('registerStudent');
-    const { valid } = await validate();
-    if (!valid) return;
-
     try {
         await studentStore.addStudent({
             Name: student.value.name,
@@ -119,6 +116,27 @@ const RegisterStudent = async () => {
         notificationStore.showSnackbar(errorMessage, 'error');
     }
 };
+
+const UpdateStudent = async () => {
+    studentStore.updateStudent({
+        Id: student.value.id,
+        Name: student.value.name,
+        Email: student.value.email
+    });
+    emit('closeRegisterStudent');
+    notificationStore.showSnackbar('Aluno atualizado com sucesso!', 'success');
+}
+
+async function handleFormSubmit() {
+    const { valid } = await validate();
+    if (!valid) return;
+
+    if (isEditing.value) {
+        UpdateStudent();
+    } else {
+        RegisterStudent();
+    }
+}
 function closeRegisterStudent() {
     studentStore.cleanSelection();
     emit('closeRegisterStudent');

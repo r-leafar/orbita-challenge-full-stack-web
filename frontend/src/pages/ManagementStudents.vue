@@ -19,23 +19,23 @@
                     </v-row>
                     <v-row>
                         <v-col v-for="item in studentStore.students" cols="12" sm="6" md="4" lg="3">
-                            <v-card flat class="border" :key="item.id">
+                            <v-card flat class="border" :key="item.Id">
                                 <v-card-subtitle class="pt-3">Informações</v-card-subtitle>
                                 <v-card-text>
                                     <v-list density="compact">
                                         <v-list-item>
                                             <v-list-item-title class="font-weight-medium">Nome:</v-list-item-title>
-                                            <v-list-item-subtitle>{{ item.name }}</v-list-item-subtitle>
+                                            <v-list-item-subtitle>{{ item.Name }}</v-list-item-subtitle>
                                         </v-list-item>
 
                                         <v-list-item>
                                             <v-list-item-title class="font-weight-medium">RA:</v-list-item-title>
-                                            <v-list-item-subtitle>{{ item.studentId }}</v-list-item-subtitle>
+                                            <v-list-item-subtitle>{{ item.StudentId }}</v-list-item-subtitle>
                                         </v-list-item>
 
                                         <v-list-item>
                                             <v-list-item-title class="font-weight-medium">CPF:</v-list-item-title>
-                                            <v-list-item-subtitle>{{ item.nationalIdValue }}</v-list-item-subtitle>
+                                            <v-list-item-subtitle>{{ item.NationalIdValue }}</v-list-item-subtitle>
                                         </v-list-item>
                                     </v-list>
 
@@ -48,7 +48,7 @@
                                     <v-btn @click="openEditStudentForm(item)" variant="tonal"
                                         color="gray">Editar</v-btn>
 
-                                    <v-btn @click="abrirConfirmDialog(item.id)" variant="tonal" color="red">Excluir
+                                    <v-btn @click="abrirConfirmDialog(item.Id)" variant="tonal" color="red">Excluir
                                     </v-btn>
                                 </v-card-actions>
                             </v-card>

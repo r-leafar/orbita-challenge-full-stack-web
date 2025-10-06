@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { defineStore } from 'pinia'
-import type { Student, CreateStudentRequest } from '@/types/student';
+import type { Student, CreateStudentRequest, UpdateStudentRequest } from '@/types/student';
 import type { PagedResponse } from '@/types/paged-response';
 import axios from "axios";
 
@@ -24,6 +24,25 @@ export const useStudentStore = defineStore('student', {
                 this.students = [...this.students, response.data];
             }
         },
+        async updateStudent(student: UpdateStudentRequest) {
+            const response = await axios.put<Student>(
+                `${API_BASE_URL}/api/v1/students`,
+                student
+            );
+            if (response.status === 200) {
+                this.students = this.students.map(s => {
+                    // 1. Encontra o aluno a ser atualizado
+                    if (s.Id === student.Id) {
+                        return {
+                            ...s,        // Pega todas as propriedades do aluno ORIGINAL
+                            ...student,  // Sobrescreve apenas as propriedades existentes no payload
+                        };
+                    }
+                    return s;
+                });
+                //  this.students = [...this.students];
+            }
+        },
         async setStudentToEdit(student: Student) {
             this.studentSelected = student;
         },
@@ -36,8 +55,8 @@ export const useStudentStore = defineStore('student', {
                 `${API_BASE_URL}/api/v1/students/${page}/${PAGE_SIZE}`
             );
 
-            if (response.data.data && response.data.data.length > 0) {
-                this.students = [...response.data.data]; // nova referência
+            if (response.data.Data && response.data.Data.length > 0) {
+                this.students = [...response.data.Data]; // nova referência
             } else {
                 this.students = [];
             }
@@ -45,7 +64,7 @@ export const useStudentStore = defineStore('student', {
         async deleteStudent(id: string) {
             const response = await axios.delete(`${API_BASE_URL}/api/v1/students/${id}`);
             if (response.status === 200 || response.status === 204) {
-                this.students = this.students.filter(student => student.id !== id);
+                this.students = this.students.filter(student => student.Id !== id);
             }
         }
     },
