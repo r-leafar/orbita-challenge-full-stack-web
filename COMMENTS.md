@@ -1,3 +1,63 @@
+# 🐳 Guia de Execução — Docker Compose (Backend + Frontend + Banco de Dados)
+
+Este `docker-compose.yaml` orquestra **três serviços principais**:  
+1. **Backend (ASP.NET Web API)**  
+2. **Frontend (Vue + Vite)**  
+3. **Banco de Dados (PostgreSQL)**  
+
+O objetivo é permitir o funcionamento completo da aplicação **com um único comando**, conectando todas as partes automaticamente.
+
+---
+
+## ⚙️ 1. Estrutura Geral dos Serviços
+
+### 🔹 `service_webapi`
+- Constrói o **backend** a partir da pasta `./backend/EdTech`.
+- Expõe a porta configurada em `${WEBAPI_HTTP_PORT}`.
+- Conecta-se ao banco **PostgreSQL** através do nome do serviço `service_postgres`.
+- Usa variáveis de ambiente para configurar conexão e URLs.
+
+### 🔹 `service_frontend`
+- Constrói o **frontend Vue/Vuetify** localizado em `./frontend`.
+- Roda o **Nginx** dentro do container e expõe a porta `${VITE_PORT}` local.
+- Se comunica com o backend via `VITE_APP_API_URL: http://service_webapi:${WEBAPI_HTTP_PORT}`.
+
+### 🔹 `service_postgres`
+- Usa a imagem oficial `postgres:17.6`.
+- Persiste os dados em um volume local (`postgres_data`).
+- Executa scripts SQL de inicialização da pasta `./initdb`.
+
+---
+
+## 📦 2. Arquivo `.env` Necessário
+
+O Docker Compose utiliza variáveis de ambiente definidas em um arquivo chamado **`.env`**, localizado na raiz do projeto.  
+Essas variáveis são usadas para configurar portas, credenciais e URLs de comunicação entre os serviços.
+
+###  Como configurar
+
+1. Localize o arquivo **`sample.env`** existente na raiz do projeto.  
+2. Renomeie-o para **`.env`** (sem o `sample`):  
+   ```bash
+   mv sample.env .env
+   ````
+## 🚀 3. Executando o Projeto
+▶️ Passo 1 — Construir e iniciar os containers
+Execute o comando abaixo na raiz do projeto (onde está o `docker-compose.yaml`):
+```bash
+docker compose up --build
+```
+1. --build garante que as imagens do frontend e backend sejam recompiladas.
+2. O processo pode demorar na primeira execução.
+
+## ✅ Verificação
+Após o build:
+
+🌐 Frontend acessível em: http://localhost:${VITE_PORT}
+⚙️ API acessível em: http://localhost:${HOST_HTTP_PORT}
+🗄️ Banco PostgreSQL rodando localmente na porta ${POSTGRES_PORT}
+Se tudo estiver correto, o frontend deve comunicar-se automaticamente com o backend via a URL definida em VITE_APP_API_URL
+---
 # Documentação do Backend (ASP.NET Core - Minimal API)
 
 Esta seção descreve a arquitetura, as funcionalidades e a organização do backend da aplicação de **gerenciamento de alunos**, desenvolvida em **C# com ASP.NET Core**.
