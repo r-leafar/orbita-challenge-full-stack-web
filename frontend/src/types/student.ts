@@ -1,9 +1,9 @@
 export type Student = {
-    id: string;
-    name: string;
-    email: string;
-    studentId: string;
-    nationalIdValue: string;
+    Id: string;
+    Name: string;
+    Email: string;
+    StudentId: string;
+    NationalIdValue: string;
 };
 
 export type CreateStudentRequest = {
@@ -12,4 +12,10 @@ export type CreateStudentRequest = {
     StudentId: string;
     NationalIdType: string;
     NationalIdValue: string;
+};
+
+export type UpdateStudentRequest = {
+    Id: string;
+    Name: string;
+    Email: string;
 };

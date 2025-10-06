@@ -1,7 +1,7 @@
 export type PagedResponse<T> = {
-    data: T[];
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalRecords: number;
+    Data: T[];
+    PageNumber: number;
+    PageSize: number;
+    TotalPages: number;
+    TotalRecords: number;
 }
