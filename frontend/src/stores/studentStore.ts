@@ -22,6 +22,7 @@ export const useStudentStore = defineStore('student', {
             if (response.status === 201 || response.status === 200) {
                 // Atualiza o array de forma reativa
                 this.students = [...this.students, response.data];
+                this.students = [...this.students.slice(0, PAGE_SIZE)];
             }
         },
         async updateStudent(student: UpdateStudentRequest) {
