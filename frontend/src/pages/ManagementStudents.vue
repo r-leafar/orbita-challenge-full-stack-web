@@ -17,6 +17,10 @@
                                     @closeRegisterStudent="registerStudentDialog = false" />
                             </v-dialog>
                         </v-col>
+                        <v-col cols="12">
+                            <v-pagination @update:modelValue="loadPageData" :total-visible="1" v-model="currentPage"
+                                :length="2"></v-pagination>
+                        </v-col>
                     </v-row>
                     <v-row>
                         <v-col v-for="item in studentStore.students.sort((a, b) => a.Name.localeCompare(b.Name))"
@@ -28,6 +32,11 @@
                                         <v-list-item>
                                             <v-list-item-title class="font-weight-medium">Nome:</v-list-item-title>
                                             <v-list-item-subtitle>{{ item.Name }}</v-list-item-subtitle>
+                                        </v-list-item>
+
+                                        <v-list-item>
+                                            <v-list-item-title class="font-weight-medium">Email:</v-list-item-title>
+                                            <v-list-item-subtitle>{{ item.Email }}</v-list-item-subtitle>
                                         </v-list-item>
 
                                         <v-list-item>
@@ -73,10 +82,10 @@ const registerStudentDialog = ref(false);
 const confirmDialog = ref(false);
 const idForDelete = ref('');
 const currentMode = ref<'create' | 'edit'>('create');
+const currentPage = ref(1);
 
 const studentStore = useStudentStore();
 const notificationStore = useNotificationStore();
-
 const searchTermIsEmpty = computed(() => searchTerm.value.trim() === '');
 
 watch(searchTermIsEmpty, (newValue) => {
@@ -85,6 +94,14 @@ watch(searchTermIsEmpty, (newValue) => {
     }
 });
 
+
+function loadPageData(page: number) {
+    if (!searchTermIsEmpty.value) {
+        studentStore.getStudentsByNamePaged(searchTerm.value, page);
+        return;
+    }
+    studentStore.getStudentsPaged(page);
+}
 
 function openConfirmDialog(id: string) {
     confirmDialog.value = true;
