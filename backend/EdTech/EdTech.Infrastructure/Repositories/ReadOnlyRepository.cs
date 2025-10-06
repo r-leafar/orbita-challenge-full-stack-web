@@ -13,8 +13,8 @@ namespace EdTech.Infrastructure.Repositories
 {
     public class ReadOnlyRepository<T, TId> : IReadOnlyRepository<T, TId> where T : BaseEntity<TId>
     {
-        private readonly ApplicationDbContext dbContext;
-        private readonly DbSet<T> dbSet;
+        protected readonly ApplicationDbContext dbContext;
+        protected readonly DbSet<T> dbSet;
         public ReadOnlyRepository(ApplicationDbContext _dbContext)
         {
             dbContext = _dbContext ?? throw new ArgumentNullException(nameof(_dbContext));

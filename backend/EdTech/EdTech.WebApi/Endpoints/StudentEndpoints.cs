@@ -5,6 +5,7 @@ using EdTech.Application.Dtos.Requests;
 using EdTech.Application.Dtos.Responses;
 using EdTech.Application.UseCases.Command;
 using EdTech.Application.UseCases.Query;
+using EdTech.Application.UseCases.Queries;
 
 namespace EdTech.WebApi.Endpoints
 {
@@ -37,6 +38,11 @@ namespace EdTech.WebApi.Endpoints
                  .Produces<PagedResponse<StudentResponse>>(StatusCodes.Status200OK)
                  .Produces(StatusCodes.Status400BadRequest);
 
+            group.MapGet("/{name}/{page:int}/{pageSize:int}", GetStudentByName)
+                .WithName("QueryStudentsByNamePaged")
+                .Produces<PagedResponse<StudentResponse>>(StatusCodes.Status200OK)
+                .Produces(StatusCodes.Status400BadRequest);
+
             return group;
         }
 
@@ -65,6 +71,13 @@ namespace EdTech.WebApi.Endpoints
         {
             var query = new GetStudentByIdQuery(repository);
             var student = await query.Handle(id);
+            return Results.Ok(student);
+        }
+
+        private static async Task<IResult> GetStudentByName(string name, int page, int pageSize, IStudentRepository repository)
+        {
+            var query = new GetStudentByNamePaged(repository);
+            var student = await query.Handle(name,page, pageSize);
             return Results.Ok(student);
         }
 
