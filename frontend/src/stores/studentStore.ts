@@ -29,7 +29,7 @@ export const useStudentStore = defineStore('student', {
                 `${API_BASE_URL}/api/v1/students`,
                 student
             );
-            if (response.status === 200) {
+            if (response.status === 204 || response.status === 200) {
                 this.students = this.students.map(s => {
                     // 1. Encontra o aluno a ser atualizado
                     if (s.Id === student.Id) {
@@ -40,7 +40,6 @@ export const useStudentStore = defineStore('student', {
                     }
                     return s;
                 });
-                //  this.students = [...this.students];
             }
         },
         async setStudentToEdit(student: Student) {
