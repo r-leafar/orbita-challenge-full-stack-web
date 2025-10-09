@@ -36,14 +36,14 @@ namespace EdTech.UnitTest.Core
         }
 
         [Fact]
-        public void CreateStudent_WithEmptySchoolId_ShouldThrowException()
+        public void CreateStudent_WithEmptyStudentId_ShouldThrowException()
         {
             var exception = Assert.Throws<DomainException>(() =>
             {
                 var student = StudentTestHelper.CreateInvalidStudent_NoSchoolId();
             });
 
-            Assert.Equal("O valor não pode ser vazio. (Parâmetro: schoolId)", exception.Message);
+            Assert.Equal("O valor não pode ser vazio. (Parâmetro: studentId)", exception.Message);
         }
 
         [Fact]
